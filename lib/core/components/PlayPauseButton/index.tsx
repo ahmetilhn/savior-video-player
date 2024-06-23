@@ -1,10 +1,15 @@
+import useController from "../../hooks/useController";
 import { store } from "../../store";
 import styles from "./index.module.scss";
 const PlayPauseButton = () => {
-  const { isPlay, setPlay } = store((store) => store);
+  const { isPlay } = store((store) => store);
+  const controller = useController();
+  const handleClick = () => {
+    isPlay ? controller.pause() : controller.play();
+  };
   return (
-    <div onClick={() => setPlay(!isPlay)} className={styles["play-pause-btn"]}>
-      {isPlay ? (
+    <div onClick={handleClick} className={styles["play-pause-btn"]}>
+      {!isPlay ? (
         <svg viewBox="0 0 32 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"
