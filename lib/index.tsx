@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import VideoPlayer from "./core/VideoPlayer";
+import App from "./core/app";
 import ParamsType from "./core/types/ParamsType";
 import IVideo from "./core/types/IVideo";
 import ISeason from "./core/types/ISeason";
@@ -19,14 +19,9 @@ class SaviorVideoPlayer {
   init() {
     const targetElem = document.getElementById(this.targetElemId);
     if (targetElem) {
-      console.log("zzz");
       const root = ReactDOM.createRoot(targetElem);
       root.render(
-        <VideoPlayer
-          video={this.video}
-          seasons={this.seasons}
-          options={this.options}
-        />
+        <App video={this.video} seasons={this.seasons} options={this.options} />
       );
     } else {
       throw new Error("Target elem not found");
