@@ -1,13 +1,19 @@
 import { store } from "../store";
 
 const useTime = () => {
-  const { currentTime, setCurrentTime } = store((store) => store);
+  const { currentTime, videoElem, isVideoReady, totalDuration } = store(
+    (store) => store
+  );
 
-  const seekForward = (time: number): void => {
-    setCurrentTime(currentTime + time);
+  const seekForward = (second: number = 1): void => {
+    if (isVideoReady && videoElem && totalDuration > currentTime) {
+      videoElem.currentTime = currentTime + second;
+    }
   };
-  const seekBackward = (time: number) => {
-    setCurrentTime(currentTime - time);
+  const seekBackward = (second: number = 1) => {
+    if (isVideoReady && videoElem && currentTime >= second) {
+      videoElem.currentTime = currentTime - second;
+    }
   };
 
   const getFormattedTime = (): string => {

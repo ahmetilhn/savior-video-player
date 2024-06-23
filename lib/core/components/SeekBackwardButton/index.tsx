@@ -1,7 +1,9 @@
+import useTime from "../../hooks/useTime";
 import BlurredControlButton from "../BlurredControlButton";
 const SeekBackwardButton = () => {
+  const { seekBackward } = useTime();
   return (
-    <BlurredControlButton onClick={() => {}}>
+    <BlurredControlButton onClick={seekBackward}>
       <svg viewBox="0 0 32 34" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M13 24V14L11 15.875"

@@ -12,7 +12,10 @@ const BlurredControlButton: React.FC<React.PropsWithChildren<Props>> = ({
   onClick,
 }) => {
   return (
-    <div onClick={onClick} className={`${styles.btn} ${className ?? ""}`}>
+    <div
+      onClick={() => onClick()}
+      className={`${styles.btn} ${className ?? ""}`}
+    >
       {children}
     </div>
   );
