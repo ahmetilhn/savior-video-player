@@ -11,6 +11,7 @@ const PanelContainer: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   return (
     <div className={`${styles["panel-container"]} ${className ?? ""}`}>
+      <div className={styles.overlay}></div>
       <div className={styles.header}></div>
       <div className={styles.middle}>
         <SeekBackwardButton />
@@ -18,6 +19,10 @@ const PanelContainer: React.FC<React.PropsWithChildren<Props>> = ({
         <SeekForwardButton />
       </div>
       <div className={styles.bottom}>
+        <div className={styles.info}>
+          <span className={styles.title}>Cold Little Heart</span>
+          <span className={styles.time}>10:24</span>
+        </div>
         <ProgressBar />
       </div>
     </div>
