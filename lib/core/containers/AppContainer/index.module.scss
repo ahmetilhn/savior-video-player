@@ -5,6 +5,8 @@
   height: 100%;
   position: relative;
   z-index: 100;
+  overflow: hidden;
+  border-radius: 10px;
   * {
     margin: 0;
     padding: 0;

@@ -1,0 +1,16 @@
+.play-pause-btn {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ffffff39;
+  cursor: pointer;
+  svg {
+    width: 40%;
+    height: 40%;
+    object-fit: contain;
+  }
+}

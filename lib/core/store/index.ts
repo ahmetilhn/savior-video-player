@@ -9,10 +9,12 @@ type Store = {
   activeSegment: ISegment | null;
   seasons: Array<ISeason> | null;
   options: OptionsType | null;
+  isPlay: boolean;
   setActiveVideo: (video: IVideo) => void;
   setActiveSegment: (segment: ISegment) => void;
   setSeasons: (seasons: Array<ISeason>) => void;
   setOptions: (options: OptionsType) => void;
+  setPlay: (val: boolean) => void;
 };
 
 const initialState = {
@@ -20,6 +22,7 @@ const initialState = {
   activeSegment: null,
   options: null,
   seasons: null,
+  isPlay: false,
 };
 
 export const store = create<Store>((set) => ({
@@ -29,4 +32,5 @@ export const store = create<Store>((set) => ({
     set(() => ({ activeSegment: segment })),
   setOptions: (options: OptionsType) => set(() => ({ options })),
   setSeasons: (seasons: Array<ISeason>) => set(() => ({ seasons })),
+  setPlay: (val: boolean) => set(() => ({ isPlay: val })),
 }));
