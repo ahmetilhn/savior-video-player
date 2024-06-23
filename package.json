@@ -19,7 +19,8 @@
   "homepage": "https://github.com/ahmetilhn/savior-video-player#readme",
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
