@@ -5,7 +5,7 @@ import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import replace from "@rollup/plugin-replace";
 export default {
-  input: "lib/index.ts",
+  input: "lib/index.tsx",
   output: [
     {
       file: "build/index.umd.js",
