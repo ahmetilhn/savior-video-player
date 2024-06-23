@@ -1,0 +1,35 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .bar {
+    position: relative;
+    width: 95%;
+    height: 8px;
+    border-radius: 8px;
+    backdrop-filter: blur(7px);
+    background-color: #ffffff8f;
+    .passing {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 30%;
+      z-index: 2;
+      height: 100%;
+      background-color: #fff;
+      border-radius: 8px;
+      span {
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        background-color: #fff;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        z-index: 3;
+        transform: translate(50%, -50%);
+      }
+    }
+  }
+}

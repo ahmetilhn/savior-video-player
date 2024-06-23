@@ -3,12 +3,12 @@
   height: 120px;
   border-radius: 50%;
   backdrop-filter: blur(7px);
+  background-color: #00000090;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   margin-right: 8px !important;
-  background-color: #00000090;
   transition: 0.1s ease;
   &:hover {
     scale: 1.05;
