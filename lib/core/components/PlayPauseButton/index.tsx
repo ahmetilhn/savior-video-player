@@ -1,5 +1,6 @@
 import useController from "../../hooks/useController";
 import { store } from "../../store";
+import BlurredControlButton from "../BlurredControlButton";
 import styles from "./index.module.scss";
 const PlayPauseButton = () => {
   const { isPlay } = store((store) => store);
@@ -8,7 +9,7 @@ const PlayPauseButton = () => {
     isPlay ? controller.pause() : controller.play();
   };
   return (
-    <div onClick={handleClick} className={styles["play-pause-btn"]}>
+    <BlurredControlButton onClick={handleClick} className={styles.btn}>
       {!isPlay ? (
         <svg viewBox="0 0 32 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -30,7 +31,7 @@ const PlayPauseButton = () => {
           />
         </svg>
       )}
-    </div>
+    </BlurredControlButton>
   );
 };
 
