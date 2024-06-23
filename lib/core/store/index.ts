@@ -11,6 +11,8 @@ type Store = {
   options: OptionsType | null;
   setActiveVideo: (video: IVideo) => void;
   setActiveSegment: (segment: ISegment) => void;
+  setSeasons: (seasons: Array<ISeason>) => void;
+  setOptions: (options: OptionsType) => void;
 };
 
 const initialState = {

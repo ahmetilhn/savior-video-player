@@ -7,17 +7,21 @@ import { store } from "./store";
 type Props = {
   options: OptionsParamType;
   video: IVideo;
-  seasons: Array<ISeason> | null;
+  seasons: Array<ISeason>;
 };
 const VideoPlayer: React.FC<React.PropsWithChildren<Props>> = ({
   options,
   video,
   seasons,
 }) => {
-  const { setActiveSegment, setActiveVideo } = store((state) => state);
+  const { setActiveSegment, setActiveVideo, setSeasons, setOptions } = store(
+    (state) => state
+  );
   useEffect(() => {
+    setOptions(options);
     setActiveVideo(video);
     setActiveSegment(video.segments[0]);
+    setSeasons(seasons);
   }, []);
   return (
     <div>
