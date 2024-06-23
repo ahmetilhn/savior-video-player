@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { store } from "../store";
 
 const useListener = () => {
-  const { videoElem, setPlay, setCurrentTime, isPlay, setTotalDuration } =
-    store((store) => store);
+  const { videoElem, setPlay, setCurrentTime, isPlay } = store(
+    (store) => store
+  );
 
   const videoEndingListener = (): void => {
     setPlay(false);
