@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from "react";
-import useTime from "../../hooks/useTime";
+import { useEffect,  useState } from "react";
 import styles from "./index.module.scss";
 import useProgress from "../../hooks/useProgress";
 import { store } from "../../store";

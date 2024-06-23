@@ -9,6 +9,9 @@
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 20px;
   background-color: #000;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
   * {
     margin: 0;
     padding: 0;
