@@ -10,7 +10,7 @@ const useController = () => {
     startListeners();
   };
 
-  const pause = () => {
+  const pause = (): void => {
     videoElem?.pause();
     setPlay(false);
   };

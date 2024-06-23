@@ -7,7 +7,7 @@ const VideoElement = () => {
       id="savior_video_element"
       className={styles.video}
       src={activeSegment?.url}
-    ></video>
+    />
   );
 };
 export default VideoElement;

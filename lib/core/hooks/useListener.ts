@@ -2,17 +2,25 @@ import { useEffect } from "react";
 import { store } from "../store";
 
 const useListener = () => {
-  const { videoElem, setPlay, isPlay } = store((store) => store);
+  const { videoElem, setPlay, setCurrentTime, isPlay } = store(
+    (store) => store
+  );
 
-  const videoEndingListener = () => {
+  const videoEndingListener = (): void => {
     setPlay(false);
+    setCurrentTime(0);
   };
 
-  const startListeners = () => {
+  const videoTimeListener = () => {
+    setCurrentTime(Math.round(videoElem?.currentTime as number));
+  };
+
+  const startListeners = (): void => {
     videoElem?.addEventListener("ended", videoEndingListener);
+    videoElem?.addEventListener("timeupdate", videoTimeListener);
   };
 
-  const removeListeners = () => {
+  const removeListeners = (): void => {
     videoElem?.removeEventListener("ended", videoEndingListener);
   };
   useEffect(() => {

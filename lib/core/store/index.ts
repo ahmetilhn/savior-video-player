@@ -9,14 +9,16 @@ type Store = {
   activeSegment: ISegment | null;
   seasons: Array<ISeason> | null;
   options: OptionsType | null;
-  isPlay: boolean;
   videoElem: HTMLVideoElement | null;
+  isPlay: boolean;
+  currentTime: number; // type of second
   setActiveVideo: (video: IVideo) => void;
   setActiveSegment: (segment: ISegment) => void;
   setSeasons: (seasons: Array<ISeason>) => void;
   setOptions: (options: OptionsType) => void;
   setPlay: (val: boolean) => void;
   setVideoElem: (elem: HTMLVideoElement) => void;
+  setCurrentTime: (val: number) => void;
 };
 
 const initialState = {
@@ -26,6 +28,7 @@ const initialState = {
   seasons: null,
   isPlay: false,
   videoElem: null,
+  currentTime: 0,
 };
 
 export const store = create<Store>((set) => ({
@@ -37,4 +40,5 @@ export const store = create<Store>((set) => ({
   setSeasons: (seasons: Array<ISeason>) => set(() => ({ seasons })),
   setPlay: (val: boolean) => set(() => ({ isPlay: val })),
   setVideoElem: (elem: HTMLVideoElement) => set(() => ({ videoElem: elem })),
+  setCurrentTime: (val: number) => set(() => ({ currentTime: val })),
 }));
