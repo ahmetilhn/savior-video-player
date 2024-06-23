@@ -1,0 +1,44 @@
+{
+  "name": "savior-video-player",
+  "version": "1.0.0-alpha.1",
+  "description": "High-speed, adaptive streaming video player for web. Created with react but published for every framework and library. 💪",
+  "main": "build/bundle.umd.js",
+  "scripts": {
+    "build": "sh ./scripts/prod-build.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ahmetilhn/savior-video-player.git"
+  },
+  "author": "Ahmet ilhan",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ahmetilhn/savior-video-player/issues"
+  },
+  "homepage": "https://github.com/ahmetilhn/savior-video-player#readme",
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
+    "@eslint/compat": "^1.1.0",
+    "@eslint/js": "^9.5.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^26.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-replace": "^5.0.7",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^9.5.0",
+    "eslint-plugin-react": "^7.34.3",
+    "globals": "^15.6.0",
+    "rollup": "^2.79.1",
+    "tslib": "^2.6.3",
+    "typescript-eslint": "^7.13.1"
+  }
+}

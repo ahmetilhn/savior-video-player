@@ -1,0 +1,10 @@
+docs
+demos
+plugins
+node_modules
+eslitn.config.mjs
+package.lock.json
+rollup.config.js
+.git
+scripts
+.DS_Store
