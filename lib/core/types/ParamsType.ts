@@ -1,10 +1,10 @@
 import ISeason from "./ISeason";
 import IVideo from "./IVideo";
-import OptionsParamType from "./OptionsType";
+import OptionsType from "./OptionsType";
 
 type ParamsType = {
   targetElemId: string;
-  options?: OptionsParamType;
+  options?: OptionsType;
   video: IVideo;
   seasons?: Array<ISeason>;
 };

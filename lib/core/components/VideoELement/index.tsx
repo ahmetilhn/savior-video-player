@@ -1,6 +1,7 @@
-import IVideo from "../../types/IVideo";
-
+import styles from "./index.module.scss";
+import { store } from "../../store";
 const VideoElement = () => {
-  return <video></video>;
+  const { activeSegment } = store((store) => store);
+  return <video src={activeSegment?.url}></video>;
 };
 export default VideoElement;

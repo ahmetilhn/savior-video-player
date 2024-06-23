@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import ISeason from "./types/ISeason";
-import IVideo from "./types/IVideo";
-import OptionsParamType from "./types/OptionsType";
-import { store } from "./store";
-
+import ISeason from "../types/ISeason";
+import IVideo from "../types/IVideo";
+import OptionsType from "../types/OptionsType";
+import { store } from "../store";
+import VideoElement from "../components/VideoELement";
+import styles from "./index.module.scss";
 type Props = {
-  options: OptionsParamType;
+  options: OptionsType;
   video: IVideo;
   seasons: Array<ISeason>;
 };
@@ -15,7 +16,7 @@ const VideoPlayer: React.FC<React.PropsWithChildren<Props>> = ({
   seasons,
 }) => {
   const { setActiveSegment, setActiveVideo, setSeasons, setOptions } = store(
-    (state) => state
+    (store) => store
   );
   useEffect(() => {
     setOptions(options);
@@ -24,9 +25,8 @@ const VideoPlayer: React.FC<React.PropsWithChildren<Props>> = ({
     setSeasons(seasons);
   }, []);
   return (
-    <div>
-      Test
-      <h1>Ahmet</h1>
+    <div className={styles["savior-video-player"]}>
+      <VideoElement />
     </div>
   );
 };

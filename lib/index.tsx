@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import VideoPlayer from "./core/video-player";
+import VideoPlayer from "./core/VideoPlayer";
 import ParamsType from "./core/types/ParamsType";
 import IVideo from "./core/types/IVideo";
 import ISeason from "./core/types/ISeason";
@@ -17,9 +17,10 @@ class SaviorVideoPlayer {
     this.options = Object.assign(this.options, params.options);
   }
   init() {
-    const container = document.getElementById(this.targetElemId);
-    if (container) {
-      const root = ReactDOM.createRoot(container);
+    const targetElem = document.getElementById(this.targetElemId);
+    if (targetElem) {
+      console.log("zzz");
+      const root = ReactDOM.createRoot(targetElem);
       root.render(
         <VideoPlayer
           video={this.video}
@@ -27,6 +28,8 @@ class SaviorVideoPlayer {
           options={this.options}
         />
       );
+    } else {
+      throw new Error("Target elem not found");
     }
   }
 }

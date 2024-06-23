@@ -9,8 +9,22 @@
     <div id="app"></div>
     <script src="../../build/index.umd.js"></script>
     <script>
-      const player = new SaviorVideoPlayer();
-      player.init("app");
+      const _video = {
+        name: "My Movie",
+        segments: [
+          {
+            label: "Mid Quality",
+            segmentCode: "mid",
+            isDefault: true,
+            url: "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4",
+          },
+        ],
+      };
+      const player = new SaviorVideoPlayer({
+        video: _video,
+        targetElemId: "app",
+      });
+      player.init();
     </script>
   </body>
 </html>
