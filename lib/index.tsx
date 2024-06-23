@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import VideoPlayer from "./core/app";
+import VideoPlayer from "./core/video-player";
 class SaviorVideoPlayer {
   init(targetElemId: string) {
     const container = document.getElementById(targetElemId);

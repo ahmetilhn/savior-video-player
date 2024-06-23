@@ -4,6 +4,7 @@ import babel from "@rollup/plugin-babel";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import replace from "@rollup/plugin-replace";
+import postcss from "rollup-plugin-postcss";
 export default {
   input: "lib/index.tsx",
   output: [
@@ -22,6 +23,11 @@ export default {
     commonjs(),
     typescript({
       tsconfig: "./tsconfig.json",
+    }),
+    postcss({
+      extensions: [".css", ".scss"],
+      minimize: true,
+      use: [["sass"]],
     }),
     replace({
       "process.env.NODE_ENV": JSON.stringify("production"),
