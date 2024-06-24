@@ -14,6 +14,7 @@ type Store = {
   currentTime: number; // type of second
   totalDuration: number; // type of second
   isVideoReady: boolean;
+  isWaitingData: boolean;
   setActiveVideo: (video: IVideo) => void;
   setActiveSegment: (segment: ISegment) => void;
   setSeasons: (seasons: Array<ISeason>) => void;
@@ -23,6 +24,7 @@ type Store = {
   setCurrentTime: (val: number) => void;
   setTotalDuration: (val: number) => void;
   setVideoReady: (val: boolean) => void;
+  setWaitingData: (val: boolean) => void;
 };
 
 const initialState = {
@@ -35,6 +37,7 @@ const initialState = {
   currentTime: 0,
   totalDuration: 0,
   isVideoReady: false,
+  isWaitingData: false,
 };
 
 export const store = create<Store>((set) => ({
@@ -49,4 +52,5 @@ export const store = create<Store>((set) => ({
   setCurrentTime: (val: number) => set(() => ({ currentTime: val })),
   setTotalDuration: (val: number) => set(() => ({ totalDuration: val })),
   setVideoReady: (val: boolean) => set(() => ({ isVideoReady: val })),
+  setWaitingData: (val: boolean) => set(() => ({ isWaitingData: val })),
 }));

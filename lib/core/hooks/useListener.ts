@@ -3,7 +3,7 @@ import { store } from "../store";
 import useSegmentDepletion from "./useSegmentDepletion";
 
 const useListener = () => {
-  const { videoElem, setPlay, setCurrentTime, isPlay } = store(
+  const { videoElem, setPlay, setCurrentTime, isPlay, setWaitingData } = store(
     (store) => store
   );
   const { checkSegmentDepletion } = useSegmentDepletion();
@@ -21,11 +21,21 @@ const useListener = () => {
     videoElem.playbackRate = 1;
   };
 
+  const listenToWaiting = () => {
+    setWaitingData(true);
+  };
+
+  const listenToCanplay = () => {
+    setWaitingData(false);
+  };
+
   const startListeners = (): void => {
     videoElem?.addEventListener("ended", videoEndingListener);
     videoElem?.addEventListener("timeupdate", videoTimeListener);
     videoElem?.addEventListener("progress", checkSegmentDepletion);
     videoElem?.addEventListener("seeked", seekedListener);
+    videoElem?.addEventListener("waiting", listenToWaiting);
+    videoElem?.addEventListener("canplay", listenToCanplay);
   };
 
   const removeListeners = (): void => {
@@ -33,6 +43,8 @@ const useListener = () => {
     videoElem?.removeEventListener("timeupdate", videoTimeListener);
     videoElem?.removeEventListener("progress", checkSegmentDepletion);
     videoElem?.removeEventListener("seeked", seekedListener);
+    videoElem?.removeEventListener("waiting", listenToWaiting);
+    videoElem?.removeEventListener("canplay", listenToCanplay);
   };
   useEffect(() => {
     if (!isPlay) {
