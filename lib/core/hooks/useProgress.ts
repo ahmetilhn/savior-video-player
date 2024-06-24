@@ -2,12 +2,19 @@ import { store } from "../store";
 
 const useProgress = () => {
   const { currentTime, totalDuration } = store((store) => store);
-  const calculateBarWidth = (): number => {
-    return (currentTime / totalDuration) * 100;
+  const calculateBarWidth = (currTime: number = currentTime): number => {
+    return (currTime / totalDuration) * 100;
+  };
+
+  const calculateNewCurrTimeBySliderWidth = (
+    sliderPassingRate: number
+  ): number => {
+    return sliderPassingRate * totalDuration;
   };
 
   return {
     calculateBarWidth,
+    calculateNewCurrTimeBySliderWidth,
   };
 };
 
