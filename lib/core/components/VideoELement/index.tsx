@@ -13,8 +13,10 @@ const VideoElement = () => {
       onLoadedMetadata={handleLoadedMetaDataEvent}
       id="savior_video_element"
       className={styles.video}
-      src={activeSegment?.url}
-    />
+      controls={false}
+    >
+      <source src={activeSegment?.url} />
+    </video>
   );
 };
 export default VideoElement;
