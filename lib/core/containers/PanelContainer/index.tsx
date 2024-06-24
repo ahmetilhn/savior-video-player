@@ -8,9 +8,12 @@ import { store } from "../../store";
 import { useEffect, useRef } from "react";
 const PanelContainer = () => {
   const panelContainerRef = useRef<HTMLDivElement>(null);
-  const { totalDuration, currentTime, setControlPanelVisible } = store(
-    (store) => store
-  );
+  const {
+    totalDuration,
+    currentTime,
+    setControlPanelVisible,
+    isControlPanelVisible,
+  } = store((store) => store);
   const { getFormattedTime } = useTime();
   const listenToMouseLeave = () => {
     setControlPanelVisible(false);
@@ -28,7 +31,11 @@ const PanelContainer = () => {
     };
   }, []);
   return (
-    <div ref={panelContainerRef} className={styles["panel-container"]}>
+    <div
+      style={{ display: !isControlPanelVisible ? "none" : "flex" }}
+      ref={panelContainerRef}
+      className={styles["panel-container"]}
+    >
       <div className={styles.overlay}></div>
       <div className={styles.header}></div>
       <div className={styles.middle}>

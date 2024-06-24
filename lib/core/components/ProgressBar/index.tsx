@@ -1,16 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import useProgress from "../../hooks/useProgress";
 import { store } from "../../store";
 import useTime from "../../hooks/useTime";
+import { debounce } from "../../utils/awesome.util";
 const ProgressBar = () => {
-  const [barWidth, setBarWidth] = useState<number>(0);
-  const [passingSliderRate, setPassingSliderRate] = useState<number>(NaN);
-  const sliderRectRef = useRef<HTMLSpanElement>(null);
-  const sliderRef = useRef<HTMLDivElement>(null);
+  const [currentBarWidth, setCurrentBarWidth] = useState<number>(0); // out of 100
+  const [desiredBarWidth, setDesiredBarWidth] = useState<number>(0); // out of 100
+  const barRectRef = useRef<HTMLSpanElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
   const { currentTime } = store((store) => store);
   const { updateTimeOnVideo } = useTime();
-  const { calculateBarWidth, calculateNewCurrTimeBySliderWidth } =
+  const { calculateNewCurrTimeByBarWidth, calculateBarWidthByPassingTime } =
     useProgress();
 
   const listenToMouseDownEvent = (e: MouseEvent): void => {
@@ -21,36 +22,57 @@ const ProgressBar = () => {
     window?.removeEventListener("mousemove", listenToMouseMoveEvent);
   };
   const listenToMouseMoveEvent = (e: MouseEvent): void => {
-    var sliderRect = sliderRef.current?.getBoundingClientRect();
-    if (!sliderRect) return;
-    setPassingSliderRate((e.clientX - sliderRect?.left) / sliderRect.width);
+    const barClientRect = barRef.current?.getBoundingClientRect();
+    if (!barClientRect) return;
+    const progressedRate =
+      ((e.clientX - barClientRect?.left) / barClientRect.width) * 100;
+    if (progressedRate < 0) {
+      setDesiredBarWidth(0);
+      return;
+    } else if (progressedRate > 100) {
+      setDesiredBarWidth(100);
+      return;
+    }
+    setDesiredBarWidth(progressedRate);
   };
 
-  useEffect(() => {
-    if (passingSliderRate >= 0 && passingSliderRate <= 1) {
-      const currTime = calculateNewCurrTimeBySliderWidth(passingSliderRate);
-      setBarWidth(calculateBarWidth(currTime));
-      updateTimeOnVideo(currTime);
-    }
-  }, [passingSliderRate]);
+  const getNewCurrTime = useMemo<number>(() => {
+    return calculateNewCurrTimeByBarWidth(desiredBarWidth);
+  }, [desiredBarWidth]);
+
+  const debouncedTimeSetter = useCallback(
+    debounce(() => updateTimeOnVideo(getNewCurrTime), 500),
+    [getNewCurrTime]
+  );
 
   useEffect(() => {
-    setBarWidth(calculateBarWidth());
+    setCurrentBarWidth(calculateBarWidthByPassingTime(getNewCurrTime));
+    debouncedTimeSetter();
+  }, [desiredBarWidth]);
+
+  useEffect(() => {
+    setCurrentBarWidth(calculateBarWidthByPassingTime());
   }, [currentTime]);
 
   useEffect(() => {
-    if (sliderRectRef.current) {
-      sliderRectRef.current?.addEventListener(
+    if (barRectRef.current) {
+      barRectRef.current?.addEventListener("mousedown", listenToMouseDownEvent);
+    }
+    return () => {
+      barRectRef.current?.removeEventListener(
         "mousedown",
         listenToMouseDownEvent
       );
-    }
+    };
   }, []);
   return (
     <div className={styles.wrapper}>
-      <div ref={sliderRef} className={styles.bar}>
-        <div style={{ width: barWidth + "%" }} className={styles.passing}>
-          <span ref={sliderRectRef}></span>
+      <div ref={barRef} className={styles.bar}>
+        <div
+          style={{ width: currentBarWidth + "%" }}
+          className={styles.passing}
+        >
+          <span ref={barRectRef}></span>
         </div>
       </div>
     </div>

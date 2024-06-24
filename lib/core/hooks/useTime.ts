@@ -29,8 +29,8 @@ const useTime = () => {
   };
 
   const updateTimeOnVideo = (time: number): void => {
-    if (!videoElem) return;
-    videoElem.currentTime = Math.round(time ?? 0);
+    if (!videoElem || time < 0 || time > totalDuration) return;
+    videoElem.currentTime = Math.round(time);
   };
 
   return {
