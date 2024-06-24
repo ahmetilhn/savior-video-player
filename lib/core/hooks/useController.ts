@@ -3,7 +3,7 @@ import useListener from "./useListener";
 
 const useController = () => {
   const { setPlay, videoElem } = store((store) => store);
-  const { startListeners } = useListener();
+  const { startListeners, removeListeners } = useListener();
   const play = () => {
     videoElem?.play();
     setPlay(true);
@@ -13,6 +13,7 @@ const useController = () => {
   const pause = (): void => {
     videoElem?.pause();
     setPlay(false);
+    removeListeners();
   };
   return {
     play,
