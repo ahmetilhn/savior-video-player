@@ -5,13 +5,13 @@
   align-items: center;
   &:hover {
     .bar {
-      height: 16px;
-      border-radius: 16px;
+      height: 14px;
+      border-radius: 14px;
       .passing {
-        border-radius: 16px;
+        border-radius: 14px;
         span {
-          width: 26px;
-          height: 26px;
+          width: 24px;
+          height: 24px;
         }
       }
     }
@@ -33,20 +33,24 @@
       height: 100%;
       background-color: #fff;
       border-radius: 8px;
-      transition: width 0.05s linear;
+      transition: width 0.08s linear;
       span {
         width: 20px;
         height: 20px;
         border-radius: 100%;
         background-color: #fff;
         position: absolute;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         right: 0;
         top: 50%;
         z-index: 3;
         transform: translate(50%, -50%);
         cursor: col-resize;
         transition: width 0.05s linear, height 0.05s linear;
-        transform-origin: center center;
+        &:hover {
+          width: 30px;
+          height: 30px;
+        }
       }
     }
   }
