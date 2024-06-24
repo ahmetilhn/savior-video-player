@@ -5,12 +5,12 @@ const useTime = () => {
     (store) => store
   );
 
-  const seekForward = (second: number = 1): void => {
+  const seekForward = (second: number = 15): void => {
     if (isVideoReady && videoElem && totalDuration > currentTime) {
       updateTimeOnVideo(currentTime + second);
     }
   };
-  const seekBackward = (second: number = 1) => {
+  const seekBackward = (second: number = 15) => {
     if (isVideoReady && videoElem && currentTime >= second) {
       updateTimeOnVideo(currentTime - second);
     }
@@ -18,10 +18,13 @@ const useTime = () => {
 
   const getFormattedTime = (val: number): string => {
     let timeStr = "";
-    const minutes = Math.round(val / 60);
-    const hours = Math.floor(minutes / 60);
+    const hours = Math.floor(val / 60 / 60);
+    const minutes = Math.floor((val - hours * 60 * 60) / 60);
     const seconds = val % 60;
-    if (hours > 0) timeStr += hours.toString() + ":";
+    if (hours > 0) {
+      timeStr += hours.toString() + ":";
+      if (minutes < 10) timeStr += "0";
+    }
     timeStr += minutes.toString() + ":";
     if (seconds < 10) timeStr += "0";
     timeStr += seconds.toString();
