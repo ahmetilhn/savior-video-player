@@ -5,16 +5,30 @@ import SeekForwardButton from "../../components/SeekForwardButton";
 import useTime from "../../hooks/useTime";
 import styles from "./index.module.scss";
 import { store } from "../../store";
-type Props = {
-  className: string;
-};
-const PanelContainer: React.FC<React.PropsWithChildren<Props>> = ({
-  className,
-}) => {
-  const { totalDuration, currentTime } = store((store) => store);
+import { useEffect, useRef } from "react";
+const PanelContainer = () => {
+  const panelContainerRef = useRef<HTMLDivElement>(null);
+  const { totalDuration, currentTime, setControlPanelVisible } = store(
+    (store) => store
+  );
   const { getFormattedTime } = useTime();
+  const listenToMouseLeave = () => {
+    setControlPanelVisible(false);
+  };
+  useEffect(() => {
+    panelContainerRef.current?.addEventListener(
+      "mouseleave",
+      listenToMouseLeave
+    );
+    return () => {
+      panelContainerRef.current?.removeEventListener(
+        "mouseleave",
+        listenToMouseLeave
+      );
+    };
+  }, []);
   return (
-    <div className={`${styles["panel-container"]} ${className ?? ""}`}>
+    <div ref={panelContainerRef} className={styles["panel-container"]}>
       <div className={styles.overlay}></div>
       <div className={styles.header}></div>
       <div className={styles.middle}>
