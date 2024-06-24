@@ -3,13 +3,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+    .bar {
+      height: 16px;
+      border-radius: 16px;
+      .passing {
+        border-radius: 16px;
+        span {
+          width: 26px;
+          height: 26px;
+        }
+      }
+    }
+  }
   .bar {
     position: relative;
     width: 95%;
     height: 8px;
     border-radius: 8px;
     backdrop-filter: blur(7px);
-    background-color: #ffffff8f;
+    background-color: #ffffff3e;
+    transition: height 0.05s linear;
     .passing {
       position: absolute;
       left: 0;
@@ -19,6 +33,7 @@
       height: 100%;
       background-color: #fff;
       border-radius: 8px;
+      transition: width 0.05s linear;
       span {
         width: 20px;
         height: 20px;
@@ -29,6 +44,9 @@
         top: 50%;
         z-index: 3;
         transform: translate(50%, -50%);
+        cursor: col-resize;
+        transition: width 0.05s linear, height 0.05s linear;
+        transform-origin: center center;
       }
     }
   }
