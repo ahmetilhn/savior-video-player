@@ -21,11 +21,17 @@ const useListener = () => {
   };
 
   const listenToSeeking = () => {
+    console.log("seeking");
     setVideoPlayable(false);
   };
 
   const listenToWaiting = () => {
+    console.log("waiting");
     setVideoPlayable(false);
+  };
+
+  const listenToLoadedFirstData = () => {
+    setVideoPlayable(true);
   };
 
   const listenToCanplay = () => {
@@ -60,6 +66,7 @@ const useListener = () => {
   return {
     startListeners,
     removeListeners,
+    listenToLoadedFirstData,
   };
 };
 

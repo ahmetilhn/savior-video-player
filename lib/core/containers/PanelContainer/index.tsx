@@ -34,7 +34,7 @@ const PanelContainer = () => {
   }, []);
   return (
     <div
-      style={{ display: !isControlPanelVisible && isPlay ? "none" : "flex" }}
+      style={{ display: !isControlPanelVisible ? "none" : "flex" }}
       ref={panelContainerRef}
       className={styles["panel-container"]}
     >

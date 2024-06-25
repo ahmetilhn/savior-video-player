@@ -29,9 +29,7 @@ const VideoContainer = () => {
   }, []);
   return (
     <div ref={videoContainerRef} className={styles["video-container"]}>
-      {!isVideoPlayable && !isWaitingMetaData && !isControlPanelVisible && (
-        <Loader />
-      )}
+      {!isVideoPlayable && !isControlPanelVisible && <Loader />}
       <VideoElement />
     </div>
   );

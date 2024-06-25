@@ -16,6 +16,8 @@ type Store = {
   isVideoPlayable: boolean;
   isWaitingMetaData: boolean;
   isControlPanelVisible: boolean;
+  wasVideoEverPlayed: boolean;
+  isVideoEnded: boolean;
   setActiveVideo: (video: IVideo) => void;
   setActiveSegment: (segment: ISegment) => void;
   setSeasons: (seasons: Array<ISeason>) => void;
@@ -38,9 +40,11 @@ const initialState = {
   videoElem: null,
   currentTime: 0,
   totalDuration: 0,
-  isVideoPlayable: true,
+  isVideoPlayable: false,
   isWaitingMetaData: true,
-  isControlPanelVisible: false,
+  isControlPanelVisible: true,
+  isVideoEnded: false,
+  wasVideoEverPlayed: false,
 };
 
 export const store = create<Store>((set) => ({
