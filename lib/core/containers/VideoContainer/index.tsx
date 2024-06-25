@@ -5,8 +5,12 @@ import { store } from "../../store";
 import Loader from "../../components/Loader";
 const VideoContainer = () => {
   const videoContainerRef = useRef<HTMLDivElement>(null);
-  const { setControlPanelVisible, isControlPanelVisible, isWaitingData } =
-    store((store) => store);
+  const {
+    setControlPanelVisible,
+    isControlPanelVisible,
+    isWaitingMetaData,
+    isVideoPlayable,
+  } = store((store) => store);
   const listenToMouseEnter = () => {
     setControlPanelVisible(true);
   };
@@ -25,7 +29,9 @@ const VideoContainer = () => {
   }, []);
   return (
     <div ref={videoContainerRef} className={styles["video-container"]}>
-      {isWaitingData && !isControlPanelVisible && <Loader />}
+      {!isVideoPlayable && !isWaitingMetaData && !isControlPanelVisible && (
+        <Loader />
+      )}
       <VideoElement />
     </div>
   );

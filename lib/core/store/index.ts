@@ -13,7 +13,7 @@ type Store = {
   isPlay: boolean;
   currentTime: number; // type of second
   totalDuration: number; // type of second
-  isVideoReady: boolean;
+  isVideoPlayable: boolean;
   isWaitingMetaData: boolean;
   isControlPanelVisible: boolean;
   setActiveVideo: (video: IVideo) => void;
@@ -24,7 +24,7 @@ type Store = {
   setVideoElem: (elem: HTMLVideoElement) => void;
   setCurrentTime: (val: number) => void;
   setTotalDuration: (val: number) => void;
-  setVideoReady: (val: boolean) => void;
+  setVideoPlayable: (val: boolean) => void;
   setWaitingMetaData: (val: boolean) => void;
   setControlPanelVisible: (val: boolean) => void;
 };
@@ -38,7 +38,7 @@ const initialState = {
   videoElem: null,
   currentTime: 0,
   totalDuration: 0,
-  isVideoReady: false,
+  isVideoPlayable: true,
   isWaitingMetaData: true,
   isControlPanelVisible: false,
 };
@@ -54,8 +54,8 @@ export const store = create<Store>((set) => ({
   setVideoElem: (elem: HTMLVideoElement) => set(() => ({ videoElem: elem })),
   setCurrentTime: (val: number) => set(() => ({ currentTime: val })),
   setTotalDuration: (val: number) => set(() => ({ totalDuration: val })),
-  setVideoReady: (val: boolean) => set(() => ({ isVideoReady: val })),
-  setWaitingMetaData: (val: boolean) => set(() => ({ isWaitingData: val })),
+  setVideoPlayable: (val: boolean) => set(() => ({ isVideoPlayable: val })),
+  setWaitingMetaData: (val: boolean) => set(() => ({ isWaitingMetaData: val })),
   setControlPanelVisible: (val: boolean) =>
     set(() => ({ isControlPanelVisible: val })),
 }));

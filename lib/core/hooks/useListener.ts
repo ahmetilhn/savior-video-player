@@ -3,7 +3,7 @@ import { store } from "../store";
 import useSegmentDepletion from "./useSegmentDepletion";
 
 const useListener = () => {
-  const { videoElem, setPlay, setCurrentTime, isPlay, setWaitingMetaData } =
+  const { videoElem, setPlay, setCurrentTime, isPlay, setVideoPlayable } =
     store((store) => store);
   const { checkSegmentDepletion } = useSegmentDepletion();
 
@@ -15,24 +15,29 @@ const useListener = () => {
   const listenToVideoTimeChanging = (): void => {
     setCurrentTime(Math.round(videoElem?.currentTime as number));
   };
-  const listenToSeeking = (): void => {
+  const listenToSeeked = (): void => {
     if (!videoElem) return;
     videoElem.playbackRate = 1;
   };
 
+  const listenToSeeking = () => {
+    setVideoPlayable(false);
+  };
+
   const listenToWaiting = () => {
-    setWaitingMetaData(true);
+    setVideoPlayable(false);
   };
 
   const listenToCanplay = () => {
-    setWaitingMetaData(false);
+    setVideoPlayable(true);
   };
 
   const startListeners = (): void => {
     videoElem?.addEventListener("ended", listenToVideoEnding);
     videoElem?.addEventListener("timeupdate", listenToVideoTimeChanging);
     videoElem?.addEventListener("progress", checkSegmentDepletion);
-    videoElem?.addEventListener("seeked", listenToSeeking);
+    videoElem?.addEventListener("seeked", listenToSeeked);
+    videoElem?.addEventListener("seeking", listenToSeeking);
     videoElem?.addEventListener("waiting", listenToWaiting);
     videoElem?.addEventListener("canplay", listenToCanplay);
   };
@@ -41,7 +46,8 @@ const useListener = () => {
     videoElem?.removeEventListener("ended", listenToVideoEnding);
     videoElem?.removeEventListener("timeupdate", listenToVideoTimeChanging);
     videoElem?.removeEventListener("progress", checkSegmentDepletion);
-    videoElem?.removeEventListener("seeked", listenToSeeking);
+    videoElem?.removeEventListener("seeked", listenToSeeked);
+    videoElem?.removeEventListener("seeking", listenToSeeking);
     videoElem?.removeEventListener("waiting", listenToWaiting);
     videoElem?.removeEventListener("canplay", listenToCanplay);
   };
@@ -49,10 +55,7 @@ const useListener = () => {
     if (!isPlay) {
       removeListeners();
     }
-    return () => {
-      removeListeners();
-    };
-  }, [videoElem, isPlay]);
+  }, [isPlay]);
 
   return {
     startListeners,

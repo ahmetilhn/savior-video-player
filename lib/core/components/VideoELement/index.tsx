@@ -7,7 +7,6 @@ const VideoElement = () => {
     activeSegment,
     activeVideo,
     setTotalDuration,
-    setVideoReady,
     setVideoElem,
     setWaitingMetaData,
   } = store((store) => store);
@@ -15,7 +14,6 @@ const VideoElement = () => {
     if (!videoRef.current) return;
     setVideoElem(videoRef.current);
     setTotalDuration(Math.round(videoRef.current.duration ?? 0));
-    setVideoReady(true);
     setWaitingMetaData(false);
   };
 

@@ -1,17 +1,15 @@
 import { store } from "../store";
 
 const useTime = () => {
-  const { currentTime, videoElem, isVideoReady, totalDuration } = store(
-    (store) => store
-  );
+  const { currentTime, videoElem, totalDuration } = store((store) => store);
 
   const seekForward = (second: number = 15): void => {
-    if (isVideoReady && videoElem && totalDuration > currentTime) {
+    if (videoElem && totalDuration > currentTime) {
       updateTimeOnVideo(currentTime + second);
     }
   };
   const seekBackward = (second: number = 15) => {
-    if (isVideoReady && videoElem && currentTime >= second) {
+    if (videoElem && currentTime >= second) {
       updateTimeOnVideo(currentTime - second);
     }
   };
