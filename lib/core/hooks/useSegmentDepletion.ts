@@ -1,12 +1,15 @@
+import { useCallback } from "react";
 import { store } from "../store";
+import { calculateEndTimeByBuffer } from "../utils/video.util";
 
 const useSegmentDepletion = () => {
   const { videoElem } = store((store) => store);
-  const checkSegmentDepletion = () => {
-    const _buffered: TimeRanges | undefined = videoElem?.buffered ?? undefined;
-    if (!_buffered || _buffered.length === 0) return;
+
+  const checkSegmentDepletion = useCallback(() => {
+    const newBufferEndTime = calculateEndTimeByBuffer(
+      videoElem?.buffered as TimeRanges
+    );
     const currTime = videoElem?.currentTime ?? 0;
-    const newBufferEndTime = _buffered?.end(_buffered?.length - 1);
     if (
       newBufferEndTime - currTime < 5 &&
       videoElem &&
@@ -22,7 +25,7 @@ const useSegmentDepletion = () => {
       videoElem.playbackRate = 1;
       console.info("Increased video speed");
     }
-  };
+  }, [videoElem?.buffered]);
   return {
     checkSegmentDepletion,
   };

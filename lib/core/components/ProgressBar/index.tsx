@@ -3,7 +3,6 @@ import styles from "./index.module.scss";
 import useProgress from "../../hooks/useProgress";
 import { store } from "../../store";
 import useTime from "../../hooks/useTime";
-import { debounce } from "../../utils/awesome.util";
 const ProgressBar = () => {
   const [currentBarWidth, setCurrentBarWidth] = useState<number>(0); // out of 100
   const [desiredBarWidth, setDesiredBarWidth] = useState<number>(0); // out of 100
@@ -24,33 +23,33 @@ const ProgressBar = () => {
   const listenToMouseUpEvent = (e: MouseEvent): void => {
     window?.removeEventListener("mousemove", listenToMouseMoveEvent);
   };
-  const listenToMouseMoveEvent = (e: MouseEvent): void => {
-    const barClientRect = barRef.current?.getBoundingClientRect();
-    if (!barClientRect) return;
-    const progressedRate =
-      ((e.clientX - barClientRect?.left) / barClientRect.width) * 100;
-    if (progressedRate < 0) {
-      setDesiredBarWidth(0);
-      return;
-    } else if (progressedRate > 100) {
-      setDesiredBarWidth(100);
-      return;
-    }
-    setDesiredBarWidth(progressedRate);
-  };
+  const listenToMouseMoveEvent = useCallback(
+    (e: MouseEvent): void => {
+      const barClientRect = barRef.current?.getBoundingClientRect();
+      if (!barClientRect) return;
+      const progressedRate =
+        ((e.clientX - barClientRect?.left) / barClientRect.width) * 100;
+      if (!isFinite(progressedRate) || isNaN(progressedRate)) {
+        return;
+      } else if (progressedRate < 0) {
+        setDesiredBarWidth(desiredBarWidth);
+        return;
+      } else if (progressedRate > 100) {
+        setDesiredBarWidth(100);
+        return;
+      }
+      setDesiredBarWidth(progressedRate);
+    },
+    [barRef.current]
+  );
 
-  const getNewCurrTime = useMemo<number>(() => {
+  const getNewCurrTime = useMemo(() => {
     return calculateNewCurrTimeByBarWidth(desiredBarWidth);
   }, [desiredBarWidth]);
 
-  const debouncedTimeSetter = useCallback(
-    debounce(() => updateTimeOnVideo(getNewCurrTime), 500),
-    [getNewCurrTime]
-  );
-
   useEffect(() => {
     setCurrentBarWidth(calculateBarWidthByPassingTime(getNewCurrTime));
-    debouncedTimeSetter();
+    updateTimeOnVideo(getNewCurrTime);
   }, [desiredBarWidth]);
 
   useEffect(() => {
@@ -67,7 +66,7 @@ const ProgressBar = () => {
         listenToMouseDownEvent
       );
     };
-  }, []);
+  }, [barRectRef]);
   return (
     <div className={styles.wrapper}>
       <div ref={barRef} className={styles.bar}>
