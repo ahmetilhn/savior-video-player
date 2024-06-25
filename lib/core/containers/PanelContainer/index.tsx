@@ -9,10 +9,12 @@ import { useEffect, useRef } from "react";
 const PanelContainer = () => {
   const panelContainerRef = useRef<HTMLDivElement>(null);
   const {
+    activeVideo,
     totalDuration,
     currentTime,
     setControlPanelVisible,
     isControlPanelVisible,
+    isPlay,
   } = store((store) => store);
   const { getFormattedTime } = useTime();
   const listenToMouseLeave = () => {
@@ -32,7 +34,7 @@ const PanelContainer = () => {
   }, []);
   return (
     <div
-      style={{ display: !isControlPanelVisible ? "none" : "flex" }}
+      style={{ display: !isControlPanelVisible && isPlay ? "none" : "flex" }}
       ref={panelContainerRef}
       className={styles["panel-container"]}
     >
@@ -45,7 +47,7 @@ const PanelContainer = () => {
       </div>
       <div className={styles.bottom}>
         <div className={styles.info}>
-          <span className={styles.title}>Cold Little Heart</span>
+          <span className={styles.title}>{activeVideo?.name}</span>
           <span className={styles.time}>
             {getFormattedTime(currentTime)} / {getFormattedTime(totalDuration)}
           </span>
