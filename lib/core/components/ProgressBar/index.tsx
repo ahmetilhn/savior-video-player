@@ -51,7 +51,7 @@ const ProgressBar = () => {
   }, [desiredBarWidth]);
 
   useEffect(() => {
-    setCurrentBarWidth(calculateBarWidthByPassingTime()); //add isDraggedControl
+    setCurrentBarWidth(calculateBarWidthByPassingTime());
   }, [currentTime]);
 
   useEffect(() => {
