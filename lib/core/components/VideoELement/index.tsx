@@ -1,10 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { store } from "../../store";
 import styles from "./index.module.scss";
 const VideoElement = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const {
     activeSegment,
+    activeVideo,
     setTotalDuration,
     setVideoReady,
     setVideoElem,
@@ -19,24 +20,22 @@ const VideoElement = () => {
   };
 
   useEffect(() => {
-    videoRef.current?.addEventListener(
-      "loadedmetadata",
-      listenToLoadedMetaData
-    );
+    const currVideRef = videoRef.current;
+    currVideRef?.addEventListener("loadedmetadata", listenToLoadedMetaData);
     return () => {
-      videoRef.current?.removeEventListener(
+      currVideRef?.removeEventListener(
         "loadedmetadata",
         listenToLoadedMetaData
       );
     };
   }, [videoRef.current]);
-
   return (
     <video
       ref={videoRef}
       id="savior_video_element"
       className={styles.video}
       controls={false}
+      poster={activeVideo?.poster}
     >
       <source src={activeSegment?.url} />
     </video>

@@ -8,5 +8,6 @@ interface IVideo {
   dubbings?: Array<IDubbing>;
   segments: Array<ISegment>;
   seasonCode?: string;
+  poster?: URL;
 }
 export default IVideo;
