@@ -3,14 +3,16 @@ import { store } from "../../store";
 import BlurredControlButton from "../BlurredControlButton";
 import styles from "./index.module.scss";
 const PlayPauseButton = () => {
-  const { isPlay } = store((store) => store);
+  const { isPlay, isVideoEnded } = store((store) => store);
   const controller = useController();
   const handleClick = () => {
-    isPlay ? controller.pause() : controller.play();
+    if (isPlay) controller.pause();
+    else if (!isPlay && isVideoEnded) controller.rePlay();
+    else controller.play();
   };
   return (
     <BlurredControlButton onClick={handleClick} className={styles.btn}>
-      {!isPlay ? (
+      {!isPlay && !isVideoEnded && (
         <svg viewBox="0 0 32 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             fillRule="evenodd"
@@ -19,7 +21,19 @@ const PlayPauseButton = () => {
             fill="white"
           />
         </svg>
-      ) : (
+      )}
+      {isVideoEnded && (
+        <svg viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M6.80387 21.1839C11.1975 26.0309 18.5787 26.296 23.2903 21.7761C28.0019 17.2563 28.2596 9.66296 23.866 4.81599C19.4724 -0.0309779 12.0912 -0.296142 7.37959 4.22373C4.69964 6.79464 3.46065 10.3599 3.69899 13.8486M0.999756 12.1428L3.83269 15.1992L6.87073 12.1428"
+            stroke="white"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      )}
+      {isPlay && (
         <svg viewBox="0 0 28 36" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M18 2C18 0.895432 18.8954 0 20 0H26C27.1046 0 28 0.895431 28 2V34C28 35.1046 27.1046 36 26 36H20C18.8954 36 18 35.1046 18 34V2Z"

@@ -23,18 +23,16 @@
   .bottom {
     width: 100%;
     display: flex;
-    padding: 40px 0;
     align-items: center;
     flex-direction: column;
     position: absolute;
-    bottom: 0;
+    bottom: 25px;
     left: 0;
     z-index: 3;
     .info {
       width: 95%;
       display: flex;
       justify-content: space-between;
-      margin-bottom: 20px;
       color: #fff;
       align-items: center;
       .title {
@@ -49,7 +47,7 @@
     z-index: 1;
     bottom: 0;
     left: 0;
-    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.9) 95%);
-    backdrop-filter: blur(1px);
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.9) 90%);
+    backdrop-filter: blur(1.5px);
   }
 }

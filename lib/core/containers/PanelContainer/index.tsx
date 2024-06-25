@@ -52,7 +52,7 @@ const PanelContainer = () => {
             {getFormattedTime(currentTime)} / {getFormattedTime(totalDuration)}
           </span>
         </div>
-        <ProgressBar />
+        {wasVideoEverPlayed && <ProgressBar />}
       </div>
     </div>
   );

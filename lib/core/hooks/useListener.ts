@@ -29,12 +29,10 @@ const useListener = () => {
   };
 
   const listenToSeeking = () => {
-    console.log("seeking");
     setVideoPlayable(false);
   };
 
   const listenToWaiting = () => {
-    console.log("waiting");
     setVideoPlayable(false);
   };
 
