@@ -11,8 +11,11 @@ const ProgressBar = () => {
   const barRef = useRef<HTMLDivElement>(null);
   const { currentTime } = store((store) => store);
   const { updateTimeOnVideo } = useTime();
-  const { calculateNewCurrTimeByBarWidth, calculateBarWidthByPassingTime } =
-    useProgress();
+  const {
+    calculateNewCurrTimeByBarWidth,
+    calculateBarWidthByPassingTime,
+    loadedBarWidth,
+  } = useProgress();
 
   const listenToMouseDownEvent = (e: MouseEvent): void => {
     window?.addEventListener("mousemove", listenToMouseMoveEvent);
@@ -74,6 +77,10 @@ const ProgressBar = () => {
         >
           <span ref={barRectRef}></span>
         </div>
+        <div
+          style={{ width: loadedBarWidth + "%" }}
+          className={styles.loaded}
+        ></div>
       </div>
     </div>
   );

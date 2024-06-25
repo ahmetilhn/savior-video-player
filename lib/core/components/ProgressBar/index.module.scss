@@ -24,12 +24,12 @@
     backdrop-filter: blur(10px);
     background-color: #ffffff17;
     transition: height 0.05s linear;
+    .loaded,
     .passing {
       position: absolute;
       left: 0;
       top: 0;
-      width: 30%;
-      z-index: 2;
+      z-index: 3;
       height: 100%;
       background-color: #fff;
       border-radius: 8px;
@@ -43,7 +43,7 @@
         box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
         right: 0;
         top: 50%;
-        z-index: 3;
+        z-index: 4;
         transform: translate(50%, -50%);
         cursor: col-resize;
         transition: width 0.05s linear, height 0.05s linear;
@@ -52,6 +52,11 @@
           height: 30px;
         }
       }
+    }
+    .loaded {
+      z-index: 2;
+      background-color: #ffffff24;
+      transition-duration: 1s;
     }
   }
 }
