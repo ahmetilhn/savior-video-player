@@ -29,6 +29,8 @@ type Store = {
   setVideoPlayable: (val: boolean) => void;
   setWaitingMetaData: (val: boolean) => void;
   setControlPanelVisible: (val: boolean) => void;
+  setVideoEverPlayed: (val: boolean) => void;
+  setVideoEnded: (val: boolean) => void;
 };
 
 const initialState = {
@@ -62,4 +64,7 @@ export const store = create<Store>((set) => ({
   setWaitingMetaData: (val: boolean) => set(() => ({ isWaitingMetaData: val })),
   setControlPanelVisible: (val: boolean) =>
     set(() => ({ isControlPanelVisible: val })),
+  setVideoEverPlayed: (val: boolean) =>
+    set(() => ({ wasVideoEverPlayed: val })),
+  setVideoEnded: (val: boolean) => set(() => ({ isVideoEnded: val })),
 }));

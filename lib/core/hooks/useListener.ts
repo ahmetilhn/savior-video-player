@@ -3,13 +3,21 @@ import { store } from "../store";
 import useSegmentDepletion from "./useSegmentDepletion";
 
 const useListener = () => {
-  const { videoElem, setPlay, setCurrentTime, isPlay, setVideoPlayable } =
-    store((store) => store);
+  const {
+    videoElem,
+    setPlay,
+    setCurrentTime,
+    isPlay,
+    setVideoPlayable,
+    setVideoEnded,
+    setControlPanelVisible,
+  } = store((store) => store);
   const { checkSegmentDepletion } = useSegmentDepletion();
 
   const listenToVideoEnding = (): void => {
     setPlay(false);
-    setCurrentTime(0);
+    setVideoEnded(true);
+    setControlPanelVisible(true);
   };
 
   const listenToVideoTimeChanging = (): void => {

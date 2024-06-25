@@ -14,7 +14,7 @@ const PanelContainer = () => {
     currentTime,
     setControlPanelVisible,
     isControlPanelVisible,
-    isPlay,
+    wasVideoEverPlayed,
   } = store((store) => store);
   const { getFormattedTime } = useTime();
   const listenToMouseLeave = () => {
@@ -41,9 +41,9 @@ const PanelContainer = () => {
       <div className={styles.overlay}></div>
       <div className={styles.header}></div>
       <div className={styles.middle}>
-        <SeekBackwardButton />
+        {wasVideoEverPlayed && <SeekBackwardButton />}
         <PlayPauseButton />
-        <SeekForwardButton />
+        {wasVideoEverPlayed && <SeekForwardButton />}
       </div>
       <div className={styles.bottom}>
         <div className={styles.info}>
