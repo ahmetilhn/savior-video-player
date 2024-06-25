@@ -3,46 +3,45 @@ import { store } from "../store";
 import useSegmentDepletion from "./useSegmentDepletion";
 
 const useListener = () => {
-  const { videoElem, setPlay, setCurrentTime, isPlay, setWaitingData } = store(
-    (store) => store
-  );
+  const { videoElem, setPlay, setCurrentTime, isPlay, setWaitingMetaData } =
+    store((store) => store);
   const { checkSegmentDepletion } = useSegmentDepletion();
 
-  const videoEndingListener = (): void => {
+  const listenToVideoEnding = (): void => {
     setPlay(false);
     setCurrentTime(0);
   };
 
-  const videoTimeListener = (): void => {
+  const listenToVideoTimeChanging = (): void => {
     setCurrentTime(Math.round(videoElem?.currentTime as number));
   };
-  const seekedListener = (): void => {
+  const listenToSeeking = (): void => {
     if (!videoElem) return;
     videoElem.playbackRate = 1;
   };
 
   const listenToWaiting = () => {
-    setWaitingData(true);
+    setWaitingMetaData(true);
   };
 
   const listenToCanplay = () => {
-    setWaitingData(false);
+    setWaitingMetaData(false);
   };
 
   const startListeners = (): void => {
-    videoElem?.addEventListener("ended", videoEndingListener);
-    videoElem?.addEventListener("timeupdate", videoTimeListener);
+    videoElem?.addEventListener("ended", listenToVideoEnding);
+    videoElem?.addEventListener("timeupdate", listenToVideoTimeChanging);
     videoElem?.addEventListener("progress", checkSegmentDepletion);
-    videoElem?.addEventListener("seeked", seekedListener);
+    videoElem?.addEventListener("seeked", listenToSeeking);
     videoElem?.addEventListener("waiting", listenToWaiting);
     videoElem?.addEventListener("canplay", listenToCanplay);
   };
 
   const removeListeners = (): void => {
-    videoElem?.removeEventListener("ended", videoEndingListener);
-    videoElem?.removeEventListener("timeupdate", videoTimeListener);
+    videoElem?.removeEventListener("ended", listenToVideoEnding);
+    videoElem?.removeEventListener("timeupdate", listenToVideoTimeChanging);
     videoElem?.removeEventListener("progress", checkSegmentDepletion);
-    videoElem?.removeEventListener("seeked", seekedListener);
+    videoElem?.removeEventListener("seeked", listenToSeeking);
     videoElem?.removeEventListener("waiting", listenToWaiting);
     videoElem?.removeEventListener("canplay", listenToCanplay);
   };

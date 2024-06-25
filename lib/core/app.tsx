@@ -14,13 +14,9 @@ const App: React.FC<React.PropsWithChildren<Props>> = ({
   video,
   seasons,
 }) => {
-  const {
-    setActiveSegment,
-    setActiveVideo,
-    setSeasons,
-    setOptions,
-    setVideoElem,
-  } = store((store) => store);
+  const { setActiveSegment, setActiveVideo, setSeasons, setOptions } = store(
+    (store) => store
+  );
   useEffect(() => {
     initStore();
   }, []);
@@ -30,8 +26,6 @@ const App: React.FC<React.PropsWithChildren<Props>> = ({
     setActiveVideo(video);
     setActiveSegment(video.segments[0]);
     setSeasons(seasons);
-    const videoElem = document.getElementById("savior_video_element");
-    if (videoElem) setVideoElem(videoElem as HTMLVideoElement);
   };
   return <AppContainer />;
 };
