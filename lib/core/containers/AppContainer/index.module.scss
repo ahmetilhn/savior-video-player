@@ -1,4 +1,4 @@
-.app-container {
+.container {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -11,6 +11,9 @@
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   * {
     margin: 0;
     padding: 0;

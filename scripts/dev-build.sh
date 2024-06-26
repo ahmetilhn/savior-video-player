@@ -1,1 +1,1 @@
-rollup -c --environment INCLUDE_DEPS,BUILD:production
+rollup -c -w --environment INCLUDE_DEPS,BUILD:production

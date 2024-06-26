@@ -18,6 +18,7 @@ type Store = {
   isControlPanelVisible: boolean;
   wasVideoEverPlayed: boolean;
   isVideoEnded: boolean;
+  isFullScreen: boolean;
   setActiveVideo: (video: IVideo) => void;
   setActiveSegment: (segment: ISegment) => void;
   setSeasons: (seasons: Array<ISeason>) => void;
@@ -31,6 +32,7 @@ type Store = {
   setControlPanelVisible: (val: boolean) => void;
   setVideoEverPlayed: (val: boolean) => void;
   setVideoEnded: (val: boolean) => void;
+  setFullScreen: (val: boolean) => void;
 };
 
 const initialState = {
@@ -47,6 +49,7 @@ const initialState = {
   isControlPanelVisible: true,
   isVideoEnded: false,
   wasVideoEverPlayed: false,
+  isFullScreen: false,
 };
 
 export const store = create<Store>((set) => ({
@@ -67,4 +70,5 @@ export const store = create<Store>((set) => ({
   setVideoEverPlayed: (val: boolean) =>
     set(() => ({ wasVideoEverPlayed: val })),
   setVideoEnded: (val: boolean) => set(() => ({ isVideoEnded: val })),
+  setFullScreen: (val: boolean) => set(() => ({ isFullScreen: val })),
 }));

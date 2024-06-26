@@ -5,41 +5,26 @@ import SeekForwardButton from "../../components/SeekForwardButton";
 import useTime from "../../hooks/useTime";
 import styles from "./index.module.scss";
 import { store } from "../../store";
-import { useEffect, useRef } from "react";
+import FullScreenButton from "../../components/FullScreenButton";
 const PanelContainer = () => {
-  const panelContainerRef = useRef<HTMLDivElement>(null);
   const {
     activeVideo,
     totalDuration,
     currentTime,
-    setControlPanelVisible,
     isControlPanelVisible,
     wasVideoEverPlayed,
+    isPlay,
   } = store((store) => store);
   const { getFormattedTime } = useTime();
-  const listenToMouseLeave = () => {
-    setControlPanelVisible(false);
-  };
-  useEffect(() => {
-    panelContainerRef.current?.addEventListener(
-      "mouseleave",
-      listenToMouseLeave
-    );
-    return () => {
-      panelContainerRef.current?.removeEventListener(
-        "mouseleave",
-        listenToMouseLeave
-      );
-    };
-  }, []);
   return (
     <div
-      style={{ display: !isControlPanelVisible ? "none" : "flex" }}
-      ref={panelContainerRef}
+      style={{ display: !isControlPanelVisible && isPlay ? "none" : "flex" }}
       className={styles["panel-container"]}
     >
       <div className={styles.overlay}></div>
-      <div className={styles.header}></div>
+      <div className={styles.top}>
+        <FullScreenButton />
+      </div>
       <div className={styles.middle}>
         {wasVideoEverPlayed && <SeekBackwardButton />}
         <PlayPauseButton />
