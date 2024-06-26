@@ -5,7 +5,7 @@
   "main": "build/bundle.umd.js",
   "scripts": {
     "build": "sh ./scripts/prod-build.sh",
-    "dev": "rollup -c -w"
+    "dev": "sh ./scripts/dev-build.sh"
   },
   "repository": {
     "type": "git",
