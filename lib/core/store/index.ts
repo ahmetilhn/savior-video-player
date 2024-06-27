@@ -3,10 +3,13 @@ import IVideo from "../types/IVideo";
 import ISegment from "../types/ISegment";
 import OptionsType from "../types/OptionsType";
 import ISeason from "../types/ISeason";
+import ICaption from "../types/ICaption";
 
 type Store = {
   activeVideo: IVideo | null;
   activeSegment: ISegment | null;
+  activeCaption: ICaption | null;
+  captionBlocks: Array<CaptionBlockType> | null;
   seasons: Array<ISeason> | null;
   options: OptionsType | null;
   videoElem: HTMLVideoElement | null;
@@ -21,6 +24,7 @@ type Store = {
   isFullScreen: boolean;
   setActiveVideo: (video: IVideo) => void;
   setActiveSegment: (segment: ISegment) => void;
+  setActiveCaption: (caption: ICaption) => void;
   setSeasons: (seasons: Array<ISeason>) => void;
   setOptions: (options: OptionsType) => void;
   setPlay: (val: boolean) => void;
@@ -33,11 +37,13 @@ type Store = {
   setVideoEverPlayed: (val: boolean) => void;
   setVideoEnded: (val: boolean) => void;
   setFullScreen: (val: boolean) => void;
+  setCaptionBlocks: (val: Array<CaptionBlockType>) => void;
 };
 
 const initialState = {
   activeVideo: null,
   activeSegment: null,
+  activeCaption: null,
   options: null,
   seasons: null,
   isPlay: false,
@@ -50,6 +56,7 @@ const initialState = {
   isVideoEnded: false,
   wasVideoEverPlayed: false,
   isFullScreen: false,
+  captionBlocks: null,
 };
 
 export const store = create<Store>((set) => ({
@@ -57,6 +64,8 @@ export const store = create<Store>((set) => ({
   setActiveVideo: (video: IVideo) => set(() => ({ activeVideo: video })),
   setActiveSegment: (segment: ISegment) =>
     set(() => ({ activeSegment: segment })),
+  setActiveCaption: (caption: ICaption) =>
+    set(() => ({ activeCaption: caption })),
   setOptions: (options: OptionsType) => set(() => ({ options })),
   setSeasons: (seasons: Array<ISeason>) => set(() => ({ seasons })),
   setPlay: (val: boolean) => set(() => ({ isPlay: val })),
@@ -71,4 +80,6 @@ export const store = create<Store>((set) => ({
     set(() => ({ wasVideoEverPlayed: val })),
   setVideoEnded: (val: boolean) => set(() => ({ isVideoEnded: val })),
   setFullScreen: (val: boolean) => set(() => ({ isFullScreen: val })),
+  setCaptionBlocks: (data: Array<CaptionBlockType>) =>
+    set(() => ({ captionBlocks: data })),
 }));

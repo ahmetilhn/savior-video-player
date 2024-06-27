@@ -1,6 +1,6 @@
 interface ICaption {
   label: string;
   captionCode: string;
-  blobUrl: URL;
+  url: URL;
 }
 export default ICaption;
