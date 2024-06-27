@@ -1,4 +1,4 @@
-import { useMemo} from "react";
+import { useMemo } from "react";
 import { parseSrtData } from "../helpers/srt.helper";
 import { store } from "../store";
 
@@ -11,7 +11,7 @@ const useCaption = () => {
       const data = await res.text();
       setCaptionBlocks(parseSrtData(data));
     } catch (err) {
-      console.warn("An error occurred while fetching .SRT file");
+      console.error(err);
     }
   };
   const getCaptionByTime = useMemo(
