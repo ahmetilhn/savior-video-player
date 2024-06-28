@@ -29,19 +29,24 @@ const useListener = () => {
     changeVideoSpeed(1);
   };
 
-  const handleSeeking = () => {
+  const handleSeeking = (): void => {
     setVideoPlayable(false);
   };
 
-  const handleWaiting = () => {
+  const handleWaiting = (): void => {
     setVideoPlayable(false);
   };
 
-  const handleCanplay = () => {
+  const handleCanplay = (): void => {
     setVideoPlayable(true);
   };
 
+  const handleError = (err: ErrorEvent): void => {
+    console.error(err);
+  };
+
   const startListeners = (): void => {
+    videoElem?.addEventListener("error", handleError);
     videoElem?.addEventListener("ended", handleVideoEnding);
     videoElem?.addEventListener("timeupdate", handleVideoTimeChanging);
     videoElem?.addEventListener("progress", checkSegmentDepletion);
@@ -59,6 +64,7 @@ const useListener = () => {
     videoElem?.removeEventListener("seeking", handleSeeking);
     videoElem?.removeEventListener("waiting", handleWaiting);
     videoElem?.removeEventListener("canplay", handleCanplay);
+    videoElem?.removeEventListener("error", handleError);
   };
   useEffect(() => {
     return () => {
