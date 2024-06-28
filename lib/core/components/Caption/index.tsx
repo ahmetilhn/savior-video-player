@@ -18,7 +18,7 @@ const Caption = () => {
     <>
       {captionBlock ? (
         <div
-          style={{ bottom: isControlPanelVisible || !isPlay ? "15%" : "12%" }}
+          style={{ bottom: isControlPanelVisible ? "15%" : "11%" }}
           className={styles.container}
         >
           <span dangerouslySetInnerHTML={{ __html: captionBlock.text }} />

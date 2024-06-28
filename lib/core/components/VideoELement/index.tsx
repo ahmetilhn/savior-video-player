@@ -16,7 +16,7 @@ const VideoElement = () => {
     setVideoPosterBlobUrl,
     setVideoPlayable,
     isVideoPlayable,
-    videoElem,
+    wasVideoEverPlayed,
   } = store((store) => store);
   const { createVideoPosterBlobUrl } = useVideo();
   const { play } = useController();
@@ -52,7 +52,7 @@ const VideoElement = () => {
   }, [videoRef.current?.src]);
 
   useEffect(() => {
-    if (isVideoPlayable) {
+    if (isVideoPlayable && !wasVideoEverPlayed) {
       play();
       startListeners();
     }

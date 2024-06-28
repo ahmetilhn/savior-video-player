@@ -5,7 +5,7 @@ import VideoContainer from "../VideoContainer";
 import styles from "./index.module.scss";
 const AppContainer = () => {
   const appContainerRef = useRef<HTMLDivElement>(null);
-  const { setControlPanelVisible } = store((store) => store);
+  const { setControlPanelVisible, isVideoPlayable } = store((store) => store);
   const handleMouseLeaveEvent = () => {
     setControlPanelVisible(false);
   };
@@ -17,10 +17,6 @@ const AppContainer = () => {
     );
   };
   useEffect(() => {
-    appContainerRef.current?.addEventListener(
-      "mouseenter",
-      handleMouseEnterEvent
-    );
     return () => {
       appContainerRef.current?.removeEventListener(
         "mouseleave",
@@ -31,7 +27,15 @@ const AppContainer = () => {
         handleMouseEnterEvent
       );
     };
-  }, [appContainerRef.current]);
+  }, []);
+  useEffect(() => {
+    if (isVideoPlayable) {
+      appContainerRef.current?.addEventListener(
+        "mouseenter",
+        handleMouseEnterEvent
+      );
+    }
+  }, [isVideoPlayable]);
   return (
     <div
       id="savior_video_player"

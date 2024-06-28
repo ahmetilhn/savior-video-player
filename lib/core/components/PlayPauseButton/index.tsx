@@ -14,6 +14,7 @@ const PlayPauseButton = () => {
   const handleClick = () => {
     if (!videoBlobUrl) {
       prepareVideoResources();
+      setControlPanelVisible(false);
       return;
     } else if (isPlay) {
       pause();

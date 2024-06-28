@@ -13,12 +13,11 @@ const PanelContainer = () => {
     currentTime,
     isControlPanelVisible,
     wasVideoEverPlayed,
-    isPlay,
   } = store((store) => store);
   const { getFormattedTime } = useTime();
   return (
     <div
-      style={{ display: !isControlPanelVisible && isPlay ? "none" : "flex" }}
+      style={{ display: !isControlPanelVisible ? "none" : "flex" }}
       className={styles["panel-container"]}
     >
       <div className={styles.overlay}></div>
