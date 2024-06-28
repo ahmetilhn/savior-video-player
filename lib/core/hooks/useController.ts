@@ -47,7 +47,7 @@ const useController = () => {
   };
   const rePlay = () => {
     clearVideoResources();
-    videoElem?.setAttribute("src", activeSegment?.url.toString() || "");
+    //videoElem?.setAttribute("src", activeSegment?.url.toString() || ""); remove after adding adaptive stream
     setCurrentTime(0);
     videoElem?.play();
     setPlay(true);
