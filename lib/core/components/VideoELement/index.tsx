@@ -1,59 +1,66 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { store } from "../../store";
 import styles from "./index.module.scss";
-import useListener from "../../hooks/useListener";
 import useVideo from "../../hooks/useVideo";
-import useCaption from "../../hooks/useCaption";
+import useController from "../../hooks/useController";
+import useListener from "../../hooks/useListener";
 const VideoElement = () => {
-  const [videoBlobUrl, setVideoBlobUrl] = useState<string | undefined>(
-    undefined
-  );
-  const [posterBlobUrl, setPosterBlobUrl] = useState<string | undefined>(
-    undefined
-  );
   const videoRef = useRef<HTMLVideoElement>(null);
   const {
-    activeSegment,
-    activeVideo,
     setTotalDuration,
     setVideoElem,
     setWaitingMetaData,
+    videoPosterBlobUrl,
+    videoBlobUrl,
+    activeVideo,
+    setVideoPosterBlobUrl,
+    setVideoPlayable,
+    isVideoPlayable,
     videoElem,
-    activeCaption,
   } = store((store) => store);
-  const { listenToLoadedFirstData } = useListener();
-  const { createVideoBlobUrl, createPosterBlobUrl } = useVideo();
-  const { initCaption } = useCaption();
-  const listenToLoadedMetaData = (): void => {
-    if (!videoRef.current) return;
-    setVideoElem(videoRef.current);
-    setTotalDuration(Math.round(videoRef.current.duration ?? 0));
+  const { createVideoPosterBlobUrl } = useVideo();
+  const { play } = useController();
+  const { startListeners } = useListener();
+  const handleLoadedMetaData = (): void => {
+    setVideoElem(videoRef.current as HTMLVideoElement);
+    setTotalDuration(Math.round(videoRef.current?.duration ?? 0));
     setWaitingMetaData(false);
-    videoRef.current.addEventListener("loadeddata", listenToLoadedFirstData);
   };
 
-  const init = async (): Promise<void> => {
-    if (activeVideo?.poster) {
-      setPosterBlobUrl(await createPosterBlobUrl());
-    }
-    if (!activeSegment?.url) return;
-    setVideoBlobUrl(await createVideoBlobUrl());
-    if (activeCaption) {
-      initCaption();
-    }
-    videoRef.current?.addEventListener(
-      "loadedmetadata",
-      listenToLoadedMetaData
-    );
+  const handleLoadedFirstData = () => {
+    setVideoPlayable(true);
+  };
+
+  const preparePoster = async (): Promise<void> => {
+    if (activeVideo?.poster)
+      setVideoPosterBlobUrl(await createVideoPosterBlobUrl());
   };
 
   useEffect(() => {
-    init();
+    videoRef.current?.addEventListener("loadedmetadata", handleLoadedMetaData);
+    videoRef.current?.addEventListener("loadeddata", handleLoadedFirstData);
     return () => {
-      videoElem?.removeEventListener("loadedmetadata", listenToLoadedMetaData);
-      videoElem?.removeEventListener("loadeddata", listenToLoadedFirstData);
+      videoRef.current?.removeEventListener(
+        "loadedmetadata",
+        handleLoadedMetaData
+      );
+      videoRef.current?.removeEventListener(
+        "loadeddata",
+        handleLoadedFirstData
+      );
     };
-  }, [videoRef.current]);
+  }, [videoRef.current?.src]);
+
+  useEffect(() => {
+    if (isVideoPlayable) {
+      play();
+      startListeners();
+    }
+  }, [isVideoPlayable]);
+
+  useEffect(() => {
+    preparePoster();
+  }, [activeVideo?.poster]);
   return (
     <video
       id="savior_video_element"
@@ -61,7 +68,7 @@ const VideoElement = () => {
       src={videoBlobUrl}
       className={styles.video}
       controls={false}
-      poster={posterBlobUrl}
+      poster={videoPosterBlobUrl}
     />
   );
 };

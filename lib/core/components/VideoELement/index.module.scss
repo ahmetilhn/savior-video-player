@@ -2,4 +2,8 @@
   width: 100%;
   display: block;
   object-fit: cover;
+  &[poster] {
+    width: 100%;
+    max-height: 90vh;
+  }
 }

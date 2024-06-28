@@ -22,6 +22,8 @@ type Store = {
   wasVideoEverPlayed: boolean;
   isVideoEnded: boolean;
   isFullScreen: boolean;
+  videoBlobUrl: string | undefined;
+  videoPosterBlobUrl: string | undefined;
   setActiveVideo: (video: IVideo) => void;
   setActiveSegment: (segment: ISegment) => void;
   setActiveCaption: (caption: ICaption) => void;
@@ -38,6 +40,8 @@ type Store = {
   setVideoEnded: (val: boolean) => void;
   setFullScreen: (val: boolean) => void;
   setCaptionBlocks: (val: Array<CaptionBlockType>) => void;
+  setVideoBlobUrl: (val: string | undefined) => void;
+  setVideoPosterBlobUrl: (val: string | undefined) => void;
 };
 
 const initialState = {
@@ -57,6 +61,8 @@ const initialState = {
   wasVideoEverPlayed: false,
   isFullScreen: false,
   captionBlocks: null,
+  videoBlobUrl: undefined,
+  videoPosterBlobUrl: undefined,
 };
 
 export const store = create<Store>((set) => ({
@@ -82,4 +88,8 @@ export const store = create<Store>((set) => ({
   setFullScreen: (val: boolean) => set(() => ({ isFullScreen: val })),
   setCaptionBlocks: (data: Array<CaptionBlockType>) =>
     set(() => ({ captionBlocks: data })),
+  setVideoBlobUrl: (val: string | undefined) =>
+    set(() => ({ videoBlobUrl: val })),
+  setVideoPosterBlobUrl: (val: string | undefined) =>
+    set(() => ({ videoPosterBlobUrl: val })),
 }));

@@ -1,22 +1,30 @@
 import useController from "../../hooks/useController";
 import useListener from "../../hooks/useListener";
+import useVideo from "../../hooks/useVideo";
 import { store } from "../../store";
 import BlurredControlButton from "../BlurredControlButton";
 import styles from "./index.module.scss";
 const PlayPauseButton = () => {
-  const { isPlay, isVideoEnded } = store((store) => store);
-  const { startListeners, removeListeners } = useListener();
-  const controller = useController();
+  const { isPlay, isVideoEnded, videoBlobUrl, setControlPanelVisible } = store(
+    (store) => store
+  );
+  const { removeListeners, startListeners } = useListener();
+  const { play, pause, rePlay } = useController();
+  const { prepareVideoResources } = useVideo();
   const handleClick = () => {
-    if (isPlay) {
-      controller.pause();
+    if (!videoBlobUrl) {
+      prepareVideoResources();
+      return;
+    } else if (isPlay) {
+      pause();
       removeListeners();
+      return;
     } else if (!isPlay && isVideoEnded) {
       startListeners();
-      controller.rePlay();
+      rePlay();
     } else {
       startListeners();
-      controller.play();
+      play();
     }
   };
   return (

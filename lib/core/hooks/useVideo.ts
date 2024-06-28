@@ -1,8 +1,12 @@
 import { useCallback } from "react";
 import { store } from "../store";
+import useCaption from "./useCaption";
 
 const useVideo = () => {
-  const { activeSegment, activeVideo } = store((store) => store);
+  const { activeSegment, activeVideo, setVideoBlobUrl, activeCaption } = store(
+    (store) => store
+  );
+  const { prepareCaption } = useCaption();
   const createVideoBlobUrl = useCallback(async (): Promise<
     string | undefined
   > => {
@@ -13,7 +17,7 @@ const useVideo = () => {
       console.error(err);
     }
   }, [activeSegment?.url]);
-  const createPosterBlobUrl = async (): Promise<string | undefined> => {
+  const createVideoPosterBlobUrl = async (): Promise<string | undefined> => {
     try {
       const res = await fetch(activeVideo?.poster as URL);
       return URL.createObjectURL(await res.blob());
@@ -21,9 +25,16 @@ const useVideo = () => {
       console.error(err);
     }
   };
+
+  const prepareVideoResources = async (): Promise<void> => {
+    setVideoBlobUrl(await createVideoBlobUrl());
+    if (activeCaption) await prepareCaption();
+  };
+
   return {
     createVideoBlobUrl,
-    createPosterBlobUrl,
+    createVideoPosterBlobUrl,
+    prepareVideoResources,
   };
 };
 

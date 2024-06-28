@@ -14,6 +14,7 @@ const useController = () => {
     totalDuration,
   } = store((store) => store);
   const { clearVideoResources } = useCleaner();
+
   const play = () => {
     videoElem?.play();
     setPlay(true);

@@ -15,65 +15,60 @@ const useListener = () => {
   } = store((store) => store);
   const { checkSegmentDepletion } = useSegmentDepletion();
   const { changeVideoSpeed } = useController();
-  const listenToVideoEnding = (): void => {
+  const handleVideoEnding = (): void => {
     setPlay(false);
     setVideoEnded(true);
     setControlPanelVisible(true);
   };
 
-  const listenToVideoTimeChanging = (): void => {
+  const handleVideoTimeChanging = (): void => {
     setCurrentTime(Math.round(videoElem?.currentTime as number));
   };
-  const listenToSeeked = (): void => {
+  const handleSeeked = (): void => {
     if (!videoElem) return;
     changeVideoSpeed(1);
   };
 
-  const listenToSeeking = () => {
+  const handleSeeking = () => {
     setVideoPlayable(false);
   };
 
-  const listenToWaiting = () => {
+  const handleWaiting = () => {
     setVideoPlayable(false);
   };
 
-  const listenToLoadedFirstData = () => {
-    setVideoPlayable(true);
-  };
-
-  const listenToCanplay = () => {
+  const handleCanplay = () => {
     setVideoPlayable(true);
   };
 
   const startListeners = (): void => {
-    videoElem?.addEventListener("ended", listenToVideoEnding);
-    videoElem?.addEventListener("timeupdate", listenToVideoTimeChanging);
+    videoElem?.addEventListener("ended", handleVideoEnding);
+    videoElem?.addEventListener("timeupdate", handleVideoTimeChanging);
     videoElem?.addEventListener("progress", checkSegmentDepletion);
-    videoElem?.addEventListener("seeked", listenToSeeked);
-    videoElem?.addEventListener("seeking", listenToSeeking);
-    videoElem?.addEventListener("waiting", listenToWaiting);
-    videoElem?.addEventListener("canplay", listenToCanplay);
+    videoElem?.addEventListener("seeked", handleSeeked);
+    videoElem?.addEventListener("seeking", handleSeeking);
+    videoElem?.addEventListener("waiting", handleWaiting);
+    videoElem?.addEventListener("canplay", handleCanplay);
   };
 
   const removeListeners = (): void => {
-    videoElem?.removeEventListener("ended", listenToVideoEnding);
-    videoElem?.removeEventListener("timeupdate", listenToVideoTimeChanging);
+    videoElem?.removeEventListener("ended", handleVideoEnding);
+    videoElem?.removeEventListener("timeupdate", handleVideoTimeChanging);
     videoElem?.removeEventListener("progress", checkSegmentDepletion);
-    videoElem?.removeEventListener("seeked", listenToSeeked);
-    videoElem?.removeEventListener("seeking", listenToSeeking);
-    videoElem?.removeEventListener("waiting", listenToWaiting);
-    videoElem?.removeEventListener("canplay", listenToCanplay);
+    videoElem?.removeEventListener("seeked", handleSeeked);
+    videoElem?.removeEventListener("seeking", handleSeeking);
+    videoElem?.removeEventListener("waiting", handleWaiting);
+    videoElem?.removeEventListener("canplay", handleCanplay);
   };
   useEffect(() => {
-    if (!isPlay) {
+    return () => {
       removeListeners();
-    }
-  }, [isPlay]);
+    };
+  }, []);
 
   return {
     startListeners,
     removeListeners,
-    listenToLoadedFirstData,
   };
 };
 

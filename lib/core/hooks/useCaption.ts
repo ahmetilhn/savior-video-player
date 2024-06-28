@@ -5,11 +5,11 @@ import { store } from "../store";
 const useCaption = () => {
   const { setCaptionBlocks, captionBlocks } = store((store) => store);
   const { activeCaption } = store((store) => store);
-  const fetchSrtFile = async (): Promise<void> => {
+  const getCaptionData = async (): Promise<string | undefined> => {
     try {
       const res = await fetch(activeCaption?.url as URL);
       const data = await res.text();
-      setCaptionBlocks(parseSrtData(data));
+      return data;
     } catch (err) {
       console.error(err);
     }
@@ -25,11 +25,12 @@ const useCaption = () => {
     [captionBlocks]
   );
 
-  const initCaption = (): void => {
-    fetchSrtFile();
+  const prepareCaption = async (): Promise<void> => {
+    const captionData = await getCaptionData();
+    if (captionData) setCaptionBlocks(parseSrtData(captionData));
   };
   return {
-    initCaption,
+    prepareCaption,
     getCaptionByTime,
   };
 };
