@@ -8,6 +8,9 @@ const VideoElement = () => {
   const [videoBlobUrl, setVideoBlobUrl] = useState<string | undefined>(
     undefined
   );
+  const [posterBlobUrl, setPosterBlobUrl] = useState<string | undefined>(
+    undefined
+  );
   const videoRef = useRef<HTMLVideoElement>(null);
   const {
     activeSegment,
@@ -19,7 +22,7 @@ const VideoElement = () => {
     activeCaption,
   } = store((store) => store);
   const { listenToLoadedFirstData } = useListener();
-  const { createVideoBlobUrl } = useVideo();
+  const { createVideoBlobUrl, createPosterBlobUrl } = useVideo();
   const { initCaption } = useCaption();
   const listenToLoadedMetaData = (): void => {
     if (!videoRef.current) return;
@@ -30,9 +33,11 @@ const VideoElement = () => {
   };
 
   const init = async (): Promise<void> => {
+    if (activeVideo?.poster) {
+      setPosterBlobUrl(await createPosterBlobUrl());
+    }
     if (!activeSegment?.url) return;
-    const blobUrl = await createVideoBlobUrl();
-    setVideoBlobUrl(blobUrl);
+    setVideoBlobUrl(await createVideoBlobUrl());
     if (activeCaption) {
       initCaption();
     }
@@ -56,7 +61,7 @@ const VideoElement = () => {
       src={videoBlobUrl}
       className={styles.video}
       controls={false}
-      poster={activeVideo?.poster}
+      poster={posterBlobUrl}
     />
   );
 };

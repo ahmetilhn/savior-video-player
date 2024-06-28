@@ -2,14 +2,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./index.module.scss";
 import useProgress from "../../hooks/useProgress";
 import { store } from "../../store";
-import useTime from "../../hooks/useTime";
+import useController from "../../hooks/useController";
 const ProgressBar = () => {
   const [currentBarWidth, setCurrentBarWidth] = useState<number>(0); // out of 100
   const [desiredBarWidth, setDesiredBarWidth] = useState<number>(0); // out of 100
   const barRectRef = useRef<HTMLSpanElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
   const { currentTime } = store((store) => store);
-  const { updateTimeOnVideo } = useTime();
+  const { changeCurrentTime } = useController();
   const {
     calculateNewCurrTimeByBarWidth,
     calculateBarWidthByPassingTime,
@@ -49,7 +49,7 @@ const ProgressBar = () => {
 
   useEffect(() => {
     setCurrentBarWidth(calculateBarWidthByPassingTime(getNewCurrTime));
-    updateTimeOnVideo(getNewCurrTime);
+    changeCurrentTime(getNewCurrTime);
   }, [desiredBarWidth]);
 
   useEffect(() => {

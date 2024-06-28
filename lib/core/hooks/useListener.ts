@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { store } from "../store";
 import useSegmentDepletion from "./useSegmentDepletion";
+import useController from "./useController";
 
 const useListener = () => {
   const {
@@ -13,7 +14,7 @@ const useListener = () => {
     setControlPanelVisible,
   } = store((store) => store);
   const { checkSegmentDepletion } = useSegmentDepletion();
-
+  const { changeVideoSpeed } = useController();
   const listenToVideoEnding = (): void => {
     setPlay(false);
     setVideoEnded(true);
@@ -25,7 +26,7 @@ const useListener = () => {
   };
   const listenToSeeked = (): void => {
     if (!videoElem) return;
-    videoElem.playbackRate = 1;
+    changeVideoSpeed(1);
   };
 
   const listenToSeeking = () => {

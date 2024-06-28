@@ -1,6 +1,5 @@
 import { store } from "../store";
 import useCleaner from "./useCleaner";
-import useListener from "./useListener";
 
 const useController = () => {
   const {
@@ -11,29 +10,46 @@ const useController = () => {
     setCurrentTime,
     setVideoEnded,
     activeSegment,
+    currentTime,
+    totalDuration,
   } = store((store) => store);
-  const { startListeners, removeListeners } = useListener();
   const { clearVideoResources } = useCleaner();
   const play = () => {
     videoElem?.play();
     setPlay(true);
-    startListeners();
     if (!wasVideoEverPlayed) setVideoEverPlayed(true);
   };
 
   const pause = (): void => {
     videoElem?.pause();
     setPlay(false);
-    removeListeners();
   };
 
+  const changeVideoSpeed = (val: number): void => {
+    if (!videoElem) return;
+    videoElem.playbackRate = val;
+  };
+  const seekForward = (second: number = 15): void => {
+    if (videoElem && totalDuration > currentTime) {
+      changeCurrentTime(currentTime + second);
+    }
+  };
+  const seekBackward = (second: number = 15): void => {
+    if (videoElem && currentTime >= second) {
+      changeCurrentTime(currentTime - second);
+    }
+  };
+
+  const changeCurrentTime = (time: number): void => {
+    if (!videoElem || time < 0 || time > totalDuration) return;
+    videoElem.currentTime = Math.round(time);
+  };
   const rePlay = () => {
     clearVideoResources();
     videoElem?.setAttribute("src", activeSegment?.url.toString() || "");
     setCurrentTime(0);
     videoElem?.play();
     setPlay(true);
-    startListeners();
     setVideoEverPlayed(true);
     setVideoEnded(false);
   };
@@ -41,6 +57,10 @@ const useController = () => {
     play,
     pause,
     rePlay,
+    changeVideoSpeed,
+    seekForward,
+    changeCurrentTime,
+    seekBackward,
   };
 };
 
