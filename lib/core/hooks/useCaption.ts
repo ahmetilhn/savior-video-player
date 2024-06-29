@@ -19,7 +19,8 @@ const useCaption = () => {
       (time: number): CaptionBlockType | undefined => {
         let _time = time * 1000;
         return captionBlocks?.find(
-          (item) => item.start < _time && item.end > _time
+          (item) =>
+            Math.floor(item.start) <= _time && Math.round(item.end + 1) >= _time
         );
       },
     [captionBlocks]

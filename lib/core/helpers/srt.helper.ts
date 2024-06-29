@@ -1,21 +1,31 @@
-import { SRT_PARSE_REGEX, SRT_TIME_PARSE_REGEX } from "../utils/constants";
+import {
+  SRT_DIALOGUE_PARSE_REGEX,
+  SRT_PARSE_REGEX,
+  SRT_TIME_PARSE_REGEX,
+} from "../utils/constants";
 
 export const parseSrtData = (data: string): Array<CaptionBlockType> => {
   const blocks: Array<CaptionBlockType> = [];
-  data = data.replace(/\r/g, "");
-  const readBLocks = data.split(/\n\n+/);
-  readBLocks.forEach((item) => {
+  const captionBLocks = data.replace(/\r/g, "").split(/\n\n+/);
+  captionBLocks.forEach((item) => {
     const matched = SRT_PARSE_REGEX.exec(item);
     if (matched?.length) {
       blocks.push({
         id: matched[1],
         start: toMillisecond(matched[2]),
         end: toMillisecond(matched[3]),
-        text: matched[4],
+        text: parseText(matched[4], matched[5]),
       });
     }
   });
   return blocks;
+};
+
+const parseText = (blockOne: string, blockTwo?: string): string => {
+  const mergedText = blockOne + "\n" + blockTwo;
+  const dialogue = SRT_DIALOGUE_PARSE_REGEX.exec(mergedText);
+  if (!dialogue) return mergedText.trim();
+  return dialogue[1].trim() + "<br/>" + dialogue[2].trim();
 };
 
 const toMillisecond = (timeStr: string): number => {
