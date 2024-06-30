@@ -5,7 +5,7 @@ import OptionsType from "./OptionsType";
 type ParamsType = {
   targetElemId: string;
   options?: OptionsType;
-  video: IVideo;
+  video?: IVideo;
   seasons?: Array<ISeason>;
 };
 

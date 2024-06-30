@@ -6,14 +6,14 @@ import ISeason from "./core/types/ISeason";
 import OptionsType from "./core/types/OptionsType";
 import { defaultOptions } from "./core/utils/constants";
 class SaviorVideoPlayer {
-  private video: IVideo;
+  private video: IVideo | null;
   private targetElemId: string;
-  private seasons: Array<ISeason> = [];
+  private seasons: Array<ISeason> | null;
   private options: OptionsType = defaultOptions;
   constructor(params: ParamsType) {
-    this.video = params.video;
+    this.video = params.video ?? null;
     this.targetElemId = params.targetElemId;
-    this.seasons = params.seasons || [];
+    this.seasons = params.seasons ?? null;
     this.options = Object.assign(this.options, params.options);
   }
   init() {

@@ -1,0 +1,27 @@
+.btn {
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  height: 42px;
+  width: max-content;
+  position: absolute;
+  right: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  background-color: #00000090;
+  img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+    overflow: hidden;
+  }
+  span {
+    font-size: 14px;
+    padding: 10px;
+    color: #fff;
+  }
+}

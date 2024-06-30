@@ -7,14 +7,13 @@ const useVideo = () => {
     (store) => store
   );
   const { prepareCaption } = useCaption();
-  const createVideoBlobUrl = useCallback(async (): Promise<
-    string | undefined
-  > => {
+  const createVideoBlobUrl = useCallback(async (): Promise<string | null> => {
     try {
       const res = await fetch(activeSegment?.url as URL);
       return URL.createObjectURL(await res.blob());
     } catch (err) {
       console.error(err);
+      return null;
     }
   }, [activeSegment?.url]);
   const createVideoPosterBlobUrl = async (): Promise<string | undefined> => {

@@ -22,12 +22,12 @@ type Store = {
   wasVideoEverPlayed: boolean;
   isVideoEnded: boolean;
   isFullScreen: boolean;
-  videoBlobUrl: string | undefined;
-  videoPosterBlobUrl: string | undefined;
-  setActiveVideo: (video: IVideo) => void;
-  setActiveSegment: (segment: ISegment) => void;
-  setActiveCaption: (caption: ICaption) => void;
-  setSeasons: (seasons: Array<ISeason>) => void;
+  videoBlobUrl: string | null;
+  videoPosterBlobUrl: string | null;
+  setActiveVideo: (video: IVideo | null) => void;
+  setActiveSegment: (segment: ISegment | null) => void;
+  setActiveCaption: (caption: ICaption | null) => void;
+  setSeasons: (seasons: Array<ISeason> | null) => void;
   setOptions: (options: OptionsType) => void;
   setPlay: (val: boolean) => void;
   setVideoElem: (elem: HTMLVideoElement) => void;
@@ -39,9 +39,9 @@ type Store = {
   setVideoEverPlayed: (val: boolean) => void;
   setVideoEnded: (val: boolean) => void;
   setFullScreen: (val: boolean) => void;
-  setCaptionBlocks: (val: Array<CaptionBlockType>) => void;
-  setVideoBlobUrl: (val: string | undefined) => void;
-  setVideoPosterBlobUrl: (val: string | undefined) => void;
+  setCaptionBlocks: (val: Array<CaptionBlockType> | null) => void;
+  setVideoBlobUrl: (val: string | null) => void;
+  setVideoPosterBlobUrl: (val: string | null) => void;
 };
 
 const initialState = {
@@ -61,19 +61,19 @@ const initialState = {
   wasVideoEverPlayed: false,
   isFullScreen: false,
   captionBlocks: null,
-  videoBlobUrl: undefined,
-  videoPosterBlobUrl: undefined,
+  videoBlobUrl: null,
+  videoPosterBlobUrl: null,
 };
 
 export const store = create<Store>((set) => ({
   ...initialState,
-  setActiveVideo: (video: IVideo) => set(() => ({ activeVideo: video })),
-  setActiveSegment: (segment: ISegment) =>
+  setActiveVideo: (video: IVideo | null) => set(() => ({ activeVideo: video })),
+  setActiveSegment: (segment: ISegment | null) =>
     set(() => ({ activeSegment: segment })),
-  setActiveCaption: (caption: ICaption) =>
+  setActiveCaption: (caption: ICaption | null) =>
     set(() => ({ activeCaption: caption })),
   setOptions: (options: OptionsType) => set(() => ({ options })),
-  setSeasons: (seasons: Array<ISeason>) => set(() => ({ seasons })),
+  setSeasons: (seasons: Array<ISeason> | null) => set(() => ({ seasons })),
   setPlay: (val: boolean) => set(() => ({ isPlay: val })),
   setVideoElem: (elem: HTMLVideoElement) => set(() => ({ videoElem: elem })),
   setCurrentTime: (val: number) => set(() => ({ currentTime: val })),
@@ -86,10 +86,9 @@ export const store = create<Store>((set) => ({
     set(() => ({ wasVideoEverPlayed: val })),
   setVideoEnded: (val: boolean) => set(() => ({ isVideoEnded: val })),
   setFullScreen: (val: boolean) => set(() => ({ isFullScreen: val })),
-  setCaptionBlocks: (data: Array<CaptionBlockType>) =>
+  setCaptionBlocks: (data: Array<CaptionBlockType> | null) =>
     set(() => ({ captionBlocks: data })),
-  setVideoBlobUrl: (val: string | undefined) =>
-    set(() => ({ videoBlobUrl: val })),
-  setVideoPosterBlobUrl: (val: string | undefined) =>
+  setVideoBlobUrl: (val: string | null) => set(() => ({ videoBlobUrl: val })),
+  setVideoPosterBlobUrl: (val: string | null) =>
     set(() => ({ videoPosterBlobUrl: val })),
 }));

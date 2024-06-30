@@ -4,10 +4,11 @@ import IVideo from "./types/IVideo";
 import OptionsType from "./types/OptionsType";
 import { store } from "./store";
 import AppContainer from "./containers/AppContainer";
+import ISegment from "./types/ISegment";
 type Props = {
   options: OptionsType;
-  video: IVideo;
-  seasons: Array<ISeason>;
+  video: IVideo | null;
+  seasons: Array<ISeason> | null;
 };
 const App: React.FC<React.PropsWithChildren<Props>> = ({
   options,
@@ -26,11 +27,12 @@ const App: React.FC<React.PropsWithChildren<Props>> = ({
   }, []);
 
   const initStore = () => {
+    const _video = (video && video) ?? (seasons && seasons[0].episodes[0]);
     setOptions(options);
-    setActiveVideo(video);
-    setActiveSegment(video.segments[0]);
+    setActiveVideo(_video);
+    setActiveSegment(_video?.segments[0] as ISegment);
     setSeasons(seasons);
-    if (video.captions?.length) setActiveCaption(video.captions[0]);
+    if (_video?.captions?.length) setActiveCaption(_video.captions[0]);
   };
   return <AppContainer />;
 };

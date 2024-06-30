@@ -9,9 +9,15 @@ const useController = () => {
     wasVideoEverPlayed,
     setCurrentTime,
     setVideoEnded,
-    activeSegment,
     currentTime,
     totalDuration,
+    setCaptionBlocks,
+    setTotalDuration,
+    setVideoBlobUrl,
+    setVideoPlayable,
+    setActiveCaption,
+    setActiveSegment,
+    activeSegment,
   } = store((store) => store);
   const { clearVideoResources } = useCleaner();
 
@@ -47,12 +53,25 @@ const useController = () => {
   };
   const rePlay = () => {
     clearVideoResources();
-    //videoElem?.setAttribute("src", activeSegment?.url.toString() || ""); remove after adding adaptive stream
     setCurrentTime(0);
+    videoElem?.setAttribute("src", activeSegment?.url.toString() || "");
     videoElem?.play();
     setPlay(true);
     setVideoEverPlayed(true);
     setVideoEnded(false);
+  };
+
+  const reset = () => {
+    setPlay(false);
+    setCurrentTime(0);
+    setVideoBlobUrl(null);
+    setVideoEverPlayed(false);
+    setVideoEnded(false);
+    setCaptionBlocks(null);
+    setActiveCaption(null);
+    setActiveSegment(null);
+    setTotalDuration(0);
+    setVideoPlayable(false);
   };
   return {
     play,
@@ -62,6 +81,7 @@ const useController = () => {
     seekForward,
     changeCurrentTime,
     seekBackward,
+    reset,
   };
 };
 
