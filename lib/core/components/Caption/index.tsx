@@ -6,9 +6,7 @@ const Caption = () => {
   const [captionBlock, setCaptionBlock] = useState<
     CaptionBlockType | undefined
   >(undefined);
-  const { currentTime, isControlPanelVisible, isPlay } = store(
-    (store) => store
-  );
+  const { currentTime, isControlPanelVisible } = store((store) => store);
   const { getCaptionByTime } = useCaption();
 
   useEffect(() => {
