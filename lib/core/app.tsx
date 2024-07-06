@@ -27,7 +27,7 @@ const App: React.FC<React.PropsWithChildren<Props>> = ({
   }, []);
 
   const initStore = () => {
-    const _video = (video && video) ?? (seasons && seasons[0].episodes[0]);
+    const _video = video ?? (seasons && seasons[0].episodes[0]);
     setOptions(options);
     setActiveVideo(_video);
     setActiveSegment(_video?.segments[0] as ISegment);
